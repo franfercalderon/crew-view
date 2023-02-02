@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Home from './views/Home/Home'
+import Login from './views/Login/Login';
+import app from './fb'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+//Initalize Firebase
+const auth = getAuth(app)
 
 function App() {
+
+  const [globalUser, setGlobalUser]= useState(null)
+
+  onAuthStateChanged(auth, (fbUser) =>{
+    // console.log(fbUser)
+    if(fbUser){
+      setGlobalUser(fbUser)
+    } else{
+      setGlobalUser(null)
+    }
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {globalUser ? <Home/> : <Login/> }
+    </>
   );
 }
 
