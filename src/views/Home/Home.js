@@ -1,9 +1,10 @@
 import Nav from "../../components/Nav/Nav"
+import SideBar from "../../components/SideBar/SideBar"
 
 export default function Home () {
     return(
         <>
-        <h2>Home</h2>
+        <SideBar/>
         <Nav/>
         </>
     )

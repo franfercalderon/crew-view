@@ -17,6 +17,9 @@ export default function LoginForm () {
 
         //Calls FIrebase function passing auth object and user data
         createUserWithEmailAndPassword(auth, email, password)
+            .then(res=>{
+                console.log(res.user)
+            })
             .catch(err=>{
                 Swal.fire({
                     title: 'Oops!',
