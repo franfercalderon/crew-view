@@ -10,37 +10,47 @@ export default function SideBar () {
             <nav className="nav-container d-flex flex-column">
                 <ul>
                     <NavLink to='/'>
-                        <FontAwesomeIcon icon={faHouse}/>
-                        Dashboard
+                        <div className="nav-link-div d-flex align-items-center">
+                            <FontAwesomeIcon icon={faHouse}/>
+                            <p className="m-0">Dashboard</p>
+                        </div>
                     </NavLink>
                 </ul>
                 <ul>
-                    <NavLink to='/'>
-                        <FontAwesomeIcon icon={faCalendar}/>
-                         Roster
+                    <NavLink to='/roster'>
+                        <div className="nav-link-div d-flex align-items-center">
+                            <FontAwesomeIcon icon={faCalendar}/>
+                            <p className="m-0">Roster</p>
+                        </div>
                     </NavLink>
                 </ul>
                 <ul>
-                    <NavLink to='/'>
-                        <FontAwesomeIcon icon={faArrowsRotate}/>
-                        Flight Swap
+                    <NavLink to='/swap'>
+                        <div className="nav-link-div d-flex align-items-center">
+                            <FontAwesomeIcon icon={faArrowsRotate}/>
+                            <p className="m-0">Flight Swap</p>
+                        </div>
                     </NavLink>
                 </ul>
                 <ul>
-                    <NavLink to='/'>
-                        <FontAwesomeIcon icon={faPaperPlane}/>
-                        Airborne
+                    <NavLink to='/airborne'>
+                        <div className="nav-link-div d-flex align-items-center">
+                            <FontAwesomeIcon icon={faPaperPlane}/>
+                            <p className="m-0">Airborne</p>
+                        </div>
                     </NavLink>
                 </ul>
                 <ul>
-                    <NavLink to='/'>
-                        <FontAwesomeIcon icon={faEnvelope}/>
-                        Messages
+                    <NavLink to='/inbox'>
+                        <div className="nav-link-div d-flex align-items-center">
+                            <FontAwesomeIcon icon={faEnvelope}/>
+                            <p className="m-0">Messages</p>
+                        </div>
                     </NavLink>
                 </ul>
             </nav>
-            <span className="nav-ball ball-1"></span>
-            <span className="nav-ball ball-2"></span>
+            {/* <span className="nav-ball ball-1"></span>
+            <span className="nav-ball ball-2"></span> */}
         </div>
         </>
     )
