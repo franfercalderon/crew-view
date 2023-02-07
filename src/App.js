@@ -14,16 +14,20 @@ function App() {
 
   const [globalUser, setGlobalUser]= useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  // const [userCreated, setUserCreated] = useState(null)
 
   onAuthStateChanged(auth, (fbUser) =>{
-    // console.log(fbUser)
     if(fbUser){
       setGlobalUser(fbUser)
+      console.log(globalUser)
     } else{
       setGlobalUser(null)
     }
     setIsLoading(false)
   })
+
+  const activeUser = sessionStorage.getItem('activeUser')
+  console.log(activeUser)
 
   return (
     <>
