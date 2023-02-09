@@ -26,8 +26,8 @@ function App() {
     setIsLoading(false)
   })
 
-  const activeUser = sessionStorage.getItem('activeUser')
-  console.log(activeUser)
+  // const activeUser = sessionStorage.getItem('activeUser')
+  // console.log(activeUser)
 
   return (
     <>

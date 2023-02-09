@@ -2,29 +2,32 @@ import { useState } from "react"
 import Swal from 'sweetalert2'
 import app from "../../fb"
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import {getFirestore, setDoc, doc} from 'firebase/firestore'
 
 //Initalize Firebase
 const auth = getAuth(app)
+//Initialize Cloud Firestore and get reference to the service
+const db = getFirestore(app)
 
 export default function LoginForm () {
 
     //STATES
     const [isLogging, setIsLogging] = useState(true)
-    // const [userCreated, setUserCreated] = useState(null)
-
 
     //FUNCTIONS
-    const createUser = (user) => {
-        // const user = userCreated
+    const createUser = (user, password) => {
         console.log(user)
-        // console.log(user)
-        //Calls FIrebase function passing auth object and user data
-        createUserWithEmailAndPassword(auth, user.email, user.password)
+
+        //Calls Firebase function passing auth object and user data
+        createUserWithEmailAndPassword(auth, user.email, password)
             .then(res=>{
-                // setUserCreated(res.user)
-                fillUserData(user)
+
+                //Function to create user in Firestore db 
+                fillUserDataInDb(user)
             })
             .catch(err=>{
+
+                //Sweet alert for errors
                 Swal.fire({
                     title: 'Oops!',
                     text: err.message,
@@ -80,18 +83,38 @@ export default function LoginForm () {
             const lastname = e.target.lastname.value
             const employeeId = e.target.employeeId.value
 
-            const user = {email, password, username, lastname, employeeId}
+            const user = {email, username, lastname, employeeId}
             // setUserCreated(user)
-            createUser(user)
+            createUser(user, password)
 
         }else{
             userLogin(email, password)
         }
 
-        // sessionStorage.setItem('activeUser', JSON.stringify(userInfo))
     }
 
-    const fillUserData = () =>{
+    const fillUserDataInDb = (user) =>{
+        console.log(user)
+
+        setDoc(doc(db, 'users', user.employeeId), user)
+            .then(res=>{
+                console.log(res)
+            })
+            .catch(err=>{
+                console.log(err)
+                // Swal.fire({
+                //     title: 'Oops!',
+                //     text: err.message,
+                //     icon: 'warning',
+                //     confirmButtonText: 'Ok',
+                //     buttonsStyling: false,
+                //     customClass:{
+                //         confirmButton: 'btn btn-primary alert-btn',
+                //         popup: 'alert-container'
+                //     }
+                // })
+            })
+
 
         //Prevents browser from refreshing
         // e.preventDefault()
