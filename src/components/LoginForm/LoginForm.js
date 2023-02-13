@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Loader from "../Loader/Loader"
 import Swal from 'sweetalert2'
 import app from "../../fb"
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
@@ -15,6 +16,7 @@ export default function LoginForm () {
 
     //STATES
     const [isLogging, setIsLogging] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     //FUNCTIONS
     const createUser = (user, password) => {
@@ -25,9 +27,11 @@ export default function LoginForm () {
 
                 //Function to create user in Firestore db 
                 createUserInDb(user)
+                // setIsLoading(false)
             })
             .catch(err=>{
 
+                setIsLoading(false)
                 //Sweet alert for errors
                 Swal.fire({
                     title: 'Oops!',
@@ -48,7 +52,11 @@ export default function LoginForm () {
 
         //Calls Firebase function to sign in
         signInWithEmailAndPassword(auth,email, password)
+            // .then(()=>{
+            //     setIsLoading(false)
+            // })
             .catch(err=>{
+                setIsLoading(false)
                 Swal.fire({
                     title: 'Oops!',
                     text: err.message,
@@ -67,6 +75,9 @@ export default function LoginForm () {
         
         //Prevents browser from refreshing
         e.preventDefault()
+
+        //Turns Loader on
+        setIsLoading(true)
 
         //Gets information from form
         const email = e.target.email.value
@@ -96,6 +107,7 @@ export default function LoginForm () {
 
             //If error is thrown
             .catch(err=>{
+                setIsLoading(false)
                 Swal.fire({
                     title: 'Oops!',
                     text: err.message,
@@ -113,6 +125,8 @@ export default function LoginForm () {
 
     return(
         <div className="login-main-container d-flex justify-content-center align-items-center">
+            {isLoading && <Loader/>}
+
             <div className="col-4 login-form-container h-auto d-flex flex-column align-items-center">
                 <>
                 <h3>{isLogging ? 'Welcome' : 'Register'}</h3>
