@@ -1,4 +1,4 @@
-import { createContext, useState , useEffect} from "react";
+import { createContext, useState , useEffect, useCallback} from "react";
 import app from "../fb";
 import { getFirestore } from "firebase/firestore";
 import {getDoc, doc, collection, query, where, getDocs} from 'firebase/firestore'
@@ -18,51 +18,89 @@ const AppProvider = ({children}) => {
 
     //STATES
     const [globalUser, setGlobalUser] = useState(null)
-    const [globalRosters, setGlobalRosters] = useState([])
-    // const [isLoading, setIsLoading] = useState(true)
+    const [currentRoster, setCurrentRoster] = useState(null)
 
-    const getUserRosters = () =>{
+    //FUNCTIONS
 
-        let rostersArray = []
+    //This will me a memoized function that will be recreated when globalUser (in dependency array) changes. This function gets all rosters for user stored in globalUser
+    const getUserRosters = useCallback(() =>{
 
-        const q = query(collection(db, "rosters"), where("crewId", "==", globalUser.employeeId));
-        getDocs(q)
-            .then((querySnapshot)=>{
-                querySnapshot.forEach(doc=>{
-                    rostersArray.push(doc.data())
+            //Declares empty array to be filled later.
+            let rostersArray = []
+
+            //Creates query for Firebase 
+            const q = query(collection(db, "rosters"), where("crewId", "==", globalUser.employeeId));
+
+            //Calls FB function to get all documents thats match the query ('crewId' == 'employeeId')
+            getDocs(q)
+                .then((querySnapshot)=>{
+                    querySnapshot.forEach(doc=>{
+
+                        //Pushes each doc to the array
+                        rostersArray.push(doc.data())
+                    })
                 })
-            })
-            .finally(()=>{
-                setGlobalRosters(rostersArray)
-            })
-    }
+                .then(()=>{
+                    getCurrentRoster(rostersArray)
+                })
+                .catch((err)=>{console.error(err.message)})
 
+    },[globalUser])
     
-    const updateContextUser = (email) =>{
-        
-        //Looks for the user in DB and stores it in context state (globalUser)
-        const docRef = doc(db, 'users', email)
-        getDoc(docRef)
-        .then((snapshot)=>{
-            if(snapshot.exists()){
+    //This function return the current month roster
+    const getCurrentRoster = (rostersArray) => {
 
-                //Updates state with user information
-                setGlobalUser(snapshot.data())
-            }
-        })
-        // .then(()=>{
+        if(rostersArray.length > 0){
 
-        //     //Calls fn to get user rosters
-        //     getUserRosters()
-        // })
-        .catch(err=>{
-            console.log(err.message)
-        })
+            //Gets current timestamp in seconds
+            const currentDate =  Math.round(Date.now()/1000)
+    
+            //Creates a roster array including only those where 'published' date is in the past
+            const pastRosters = rostersArray.filter(roster =>{
+                return(
+                    roster.published.seconds <= currentDate
+                )
+            })
+    
+            //Sorts past rosters by published date and gets the biggest result (it will be the closest to currentDate)
+            const thisMonthRoster = pastRosters.sort((a,b) => a.published.seconds - b.published.seconds).reverse()[0]
+            
+            //Stores roster in State
+            return(setCurrentRoster(thisMonthRoster))
+        }
+        else{
+            setCurrentRoster({})
+        }
     }
 
-    // if(globalUser){
-    //     getUserRosters()
-    // }
+    //This function gets user info from DB and stores is in a State
+    const updateContextUser = (email)=>{
+
+            //Creates reference to doc, looking for a doc containing user's email 
+            const docRef = doc(db, 'users', email)
+            getDoc(docRef)
+            .then((snapshot)=>{
+
+                //If this document exists
+                if(snapshot.exists()){
+    
+                    //Updates state with user information
+                    setGlobalUser(snapshot.data())
+                }
+            })
+            .catch((err)=>{console.error(err.message)})
+    }
+
+    useEffect(()=>{
+
+        //If globalUser is set, calls fn to get user's rosters
+        if(globalUser){
+
+            getUserRosters()
+        }
+
+    },[globalUser,getUserRosters])
+    
     
     useEffect(()=>{
         
@@ -75,22 +113,19 @@ const AppProvider = ({children}) => {
                 updateContextUser(fbUser.email)
             }
             else{
+
                 //If not, sets context User to null (SignOut)
                 setGlobalUser(null)
             }
         })
-        
 
     },[])
     
     return(
+
         <Provider value={{
-            updateContextUser,
             globalUser,
-            globalRosters,
-            getUserRosters
-            // isLoading
-            // getUserByEmail                                 v
+            currentRoster                            
         }}>
             {children}
         </Provider>

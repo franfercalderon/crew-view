@@ -6,8 +6,6 @@
     justify-content: center
     align-items: center
     background-color: #00000035
-    // background-color: black
-
     height: 100vh
     width: 100vw
     
@@ -20,6 +18,7 @@
     0%
         transform: scale(0)
         opacity: 1
+        
     100%
         transform: scale(1)
         opacity: 0
@@ -39,3 +38,52 @@
     border-radius: 50%
     position: absolute
 
+.gooey
+  position: absolute
+  top: 50%
+  left: 50%
+  width: 142px
+  height: 40px
+  margin: -20px 0 0 -51px
+  background: white
+  filter: contrast(1)
+
+  .dot
+    position: absolute
+    width: 12px
+    height: 12px
+    top: 12px
+    left: 0
+    background: $lightblue
+    border-radius: 50%
+    transform: translateX(0)
+    animation: dot 2.8s infinite
+.dots
+    transform: translateX(0)
+    margin-top: 12px
+    margin-left: 20px
+    animation: dots 2.8s infinite
+
+.dots span
+    display: block
+    float: left
+    width: 12px
+    height: 12px
+    margin-left: 16px
+    background: $lightblue
+    border-radius: 50%
+
+@keyframes dot
+    50%
+        transform: translateX(96px)
+        opacity: 0.4
+
+    100%
+        opacity: 0.8
+
+@keyframes dots
+    50%
+        transform: translateX(-31px)
+        opacity: 0.4
+    100%
+        opacity: 0.8

@@ -25,9 +25,8 @@ export default function LoginForm () {
         createUserWithEmailAndPassword(auth, user.email, password)
             .then(()=>{
 
-                //Function to create user in Firestore db 
+                //Calls function to create user in Firestore db 
                 createUserInDb(user)
-                // setIsLoading(false)
             })
             .catch(err=>{
 
@@ -52,10 +51,9 @@ export default function LoginForm () {
 
         //Calls Firebase function to sign in
         signInWithEmailAndPassword(auth,email, password)
-            // .then(()=>{
-            //     setIsLoading(false)
-            // })
             .catch(err=>{
+
+                //If error is catched, sets loader to false and shows error in alert
                 setIsLoading(false)
                 Swal.fire({
                     title: 'Oops!',
@@ -86,12 +84,12 @@ export default function LoginForm () {
         //Calls proper function depending on state
         if(!isLogging){
 
+            //Gets values from form to create user object
             const username = e.target.username.value
             const lastname = e.target.lastname.value
             const employeeId = e.target.employeeId.value
 
             const user = {email, username, lastname, employeeId}
-            // setUserCreated(user)
             createUser(user, password)
 
         }else{
@@ -132,7 +130,7 @@ export default function LoginForm () {
                 <h3>{isLogging ? 'Welcome' : 'Register'}</h3>
                 <form className="login-form" onSubmit={submitHandler}>
                     <label>
-                        <input type='text' placeholder='name@you.com' name="email" autoComplete="current-password"/>
+                        <input type='text' placeholder='name@you.com' name="email" autoComplete="on"/>
                     </label>
                     <label>
                         <input type='password' placeholder='Password' name="password" autoComplete="current-password"/>
