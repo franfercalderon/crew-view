@@ -1,4 +1,10 @@
+import { useContext } from "react"
+import { AppContext } from "../../context/AppContext"
+
 export default function NextFlight ({flight}) {
+    
+    //Gets functions from context
+    const {addZero, capitalizeWords} = useContext(AppContext)
 
     //Gets new Date object from next flight departure time
     const flightDate = new Date(flight.departure.time.seconds*1000)
@@ -6,23 +12,6 @@ export default function NextFlight ({flight}) {
     //Config for date functions
     const monthOptions = { month: "short" }
     const dayOptions = { weekday: "long" }
-    const addZero = (input) =>{
-
-        if(input<10){
-            let output = '0'+ input
-            return output
-        }
-        else return input
-    }
-    const capitalizeWords = (string) =>{
-        return(
-            string
-                .toLowerCase()
-                .split(' ')
-                .map((word)=>word.charAt(0).toUpperCase()+word.slice(1))
-                .join(' ')
-        )
-    }
 
     //Creates an accessible Date info object
     const flightActualDate = {

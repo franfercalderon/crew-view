@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState , useContext} from 'react'
+import { AppContext } from '../../context/AppContext'
 import WidgetLoader from '../WidgetLoader/WidgetLoader'
 
 export default function Forecast ({flight}) {
@@ -7,27 +8,10 @@ export default function Forecast ({flight}) {
     const [isLoading, setIsLoading] =useState(true)
     const [forecast, setForecast] = useState(null)
     
-    //FUNCTIONS
-    const addZero = (input) =>{
-        
-        //Adds a 0 behind if day/month values are 1 digit:
-        if(input<10){
-            let output = '0'+ input
-            return output
-        }
-        else return input
-    }
-
-    const capitalizeWords = (string) =>{
-        return(
-            string
-                .toLowerCase()
-                .split(' ')
-                .map((word)=>word.charAt(0).toUpperCase()+word.slice(1))
-                .join(' ')
-        )
-    }
+    //Gets functions from context
+    const {addZero, capitalizeWords} = useContext(AppContext)
     
+    // //FUNCTIONS
     //This function gets the forcast for the flight arrival date out of the days the API responded with (14 days)
     const getArrivalForecast = useCallback((apiForecast) =>{
         
@@ -48,7 +32,7 @@ export default function Forecast ({flight}) {
         const arrivalForecast = apiForecast.forecast.forecastday.find(day=>day.date === arrivalDateString)
         setForecast(arrivalForecast)
         
-    },[flight])
+    },[flight, addZero])
 
 
     //When app mounts and when flight changes
@@ -72,11 +56,20 @@ export default function Forecast ({flight}) {
                 .then(res => getArrivalForecast(res))
 
                 //Finally sets loader to false
-                .finally(() => setIsLoading(false))
+                .finally(() => {
+                    
+                    setTimeout(()=>{
+
+                        setIsLoading(false)
+                    },1500)
+                })
                 .catch(err => console.log(err.message))
         }
 
-        else setIsLoading(false)
+        else{
+            setIsLoading(false)
+            
+        } 
 
     },[flight, getArrivalForecast])
 

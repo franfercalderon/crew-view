@@ -22,6 +22,26 @@ const AppProvider = ({children}) => {
 
     //FUNCTIONS
 
+    const addZero = (input) =>{
+        
+        //Adds a 0 behind if day/month values are 1 digit:
+        if(input<10){
+            let output = '0'+ input
+            return output
+        }
+        else return input
+    }
+
+    const capitalizeWords = (string) =>{
+        return(
+            string
+                .toLowerCase()
+                .split(' ')
+                .map((word)=>word.charAt(0).toUpperCase()+word.slice(1))
+                .join(' ')
+        )
+    }
+
     //This will me a memoized function that will be recreated when globalUser (in dependency array) changes. This function gets all rosters for user stored in globalUser
     const getUserRosters = useCallback(() =>{
 
@@ -125,7 +145,9 @@ const AppProvider = ({children}) => {
 
         <Provider value={{
             globalUser,
-            currentRoster                            
+            currentRoster,
+            addZero,
+            capitalizeWords                           
         }}>
             {children}
         </Provider>

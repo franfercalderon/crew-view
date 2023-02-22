@@ -1,21 +1,12 @@
 import app from "../../fb"
 import {getFirestore, setDoc, doc} from 'firebase/firestore'
+import {v4 as uuidv4} from 'uuid'
 
 //Initialize Cloud Firestore and get reference to the service
 const db = getFirestore(app)
 
-
 export default function Rosters () {
 
-    // const ahora = Date.now().toDateString
-    // console.log(ahora)
-
-    // const fecha = toDateString(ahora)
-
-    // console.log('Fecha es '+fecha)
-
-    // const publicaFecha = new Date(1675220400)
-    // console.log(publicaFecha)
 
     const rosterOne = {
         "crewId": "0001",
@@ -27,6 +18,7 @@ export default function Rosters () {
             },
             {
                 "departure": {
+                    'fromHub': true,
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
@@ -44,12 +36,14 @@ export default function Rosters () {
                     "img" : "/images/aircrafts/a330.jpeg"
                 },
                 "flight": "ar1132",
+                // 'flightId': ,
                 "active": true,
+                'flightId': uuidv4(),
                 "flightActivity": true,
+                'international':true,
                 "date": new Date(2023,1,2),
                 "duration": {
-                    "hours": 11,
-                    "minutes": 55
+                    "minutes": 715
                 }
             },
             {
@@ -62,8 +56,11 @@ export default function Rosters () {
             },
             {
                 "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
                 "active": true,
                 "departure": {
+                    'fromHub': false,
                     "airportCode": "mad",
                     "city": "madrid",
                     "airport": "adolfo suarez intl.",
@@ -81,8 +78,7 @@ export default function Rosters () {
                     "img" : "/images/aircrafts/a330.jpeg"
                 },
                 "duration": {
-                    "minutes": 10,
-                    "hours": 13
+                    "minutes": 793
                 },
                 "date": new Date(2023,1,5),
                 "flight": "ar1131"
@@ -93,8 +89,7 @@ export default function Rosters () {
             },
             {
                 "duration": {
-                    "hours": 11,
-                    "minutes": 5
+                    "minutes": 665
                 },
                 "flight": "ar1300",
                 "equipment": {
@@ -103,7 +98,10 @@ export default function Rosters () {
                     "img" : "/images/aircrafts/a330.jpeg"
                 },
                 "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
                 "departure": {
+                    'fromHub': true,
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
@@ -129,12 +127,14 @@ export default function Rosters () {
                     "img" : "/images/aircrafts/a330.jpeg"
                 },
                 "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
                 "active": true,
                 "duration": {
-                    "hours": 10,
-                    "minutes": 55
+                    "minutes": 655
                 },
                 "departure": {
+                    'fromHub': false,
                     "airportCode": "jfk",
                     "airportName": "john f. kennedy intl.",
                     "city": "new york",
@@ -162,6 +162,7 @@ export default function Rosters () {
                     "img" : "/images/aircrafts/b737m.jpeg"
                 },
                 "departure": {
+                    'fromHub': true,
                     "airportCode": "aep",
                     "airportName": "aeroparque j.newbery.",
                     "city": "buenos aires",
@@ -174,16 +175,20 @@ export default function Rosters () {
                     "time": new Date(2023,1,11,15,45)
                 },
                 "flightActivity": true,
+                'international':false,
+                'flightId': uuidv4(),
                 "active": true,
                 "duration": {
-                    "hours": 2,
-                    "minutes": 25
+                    "minutes": 145
                 }
             },
             {
                 "flightActivity": true,
+                'international':false,
+                'flightId': uuidv4(),
                 "date": new Date(2023,1,12),
                 "departure": {
+                    'fromHub': false,
                     "airportCode": "brc",
                     "city": "bariloche",
                     "airport": "tte. Luis Candelaria intl.",
@@ -203,8 +208,7 @@ export default function Rosters () {
                 },
                 "active": true,
                 "duration": {
-                    "minutes": 5,
-                    "hours": 2
+                    "minutes": 125
                 }
             },
             {
@@ -225,11 +229,11 @@ export default function Rosters () {
                     "time": new Date(2023,1,16,17,0)
                 },
                 "duration": {
-                    "minutes": 20,
-                    "hours": 13
+                    "minutes": 800
                 },
                 "flight": "ar1140",
                 "departure": {
+                    'fromHub': true,
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
@@ -240,7 +244,9 @@ export default function Rosters () {
                     "model" : "330-300",
                     "img" : "/images/aircrafts/a330.jpeg"
                 },
-                "flightActivity": true
+                "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4()
             },
             {
                 "active": false,
@@ -261,7 +267,10 @@ export default function Rosters () {
                 },
                 "active": true,
                 "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
                 "departure": {
+                    'fromHub': false,
                     "airportCode": "fco",
                     "city": "rome",
                     "airport": "fiumicino intl.",
@@ -273,8 +282,7 @@ export default function Rosters () {
                     "img" : "/images/aircrafts/a330.jpeg"
                 },
                 "duration": {
-                    "hours": 14,
-                    "minutes": 25
+                    "minutes": 865
                 }
             },
             {
@@ -343,20 +351,23 @@ export default function Rosters () {
                     "img" : "/images/aircrafts/a330.jpeg"
                 },
                 "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
                 "departure": {
+                    'fromHub': true,
                     "airportCode": "eze",
                     "city" : "buenos aires",
                     "airport": "ministro pistarini intl.",
                     "time": new Date(2023,1,27,7,30)
                 },
                 "duration": {
-                    "minutes": 10,
-                    "hours": 9
+                    "minutes": 550
                 }
             },
             {
                 "date": new Date(2023,1,28),
                 "departure": {
+                    'fromHub': false,
                     "airportCode": "mia",
                     "city" : "miami",
                     "airport": "miami intl.",
@@ -371,10 +382,11 @@ export default function Rosters () {
                     "time": new Date(2023,2,1,4,0)
                 },
                 "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
                 "flight": "ar1303",
                 "duration": {
-                    "minutes": 0,
-                    "hours": 9
+                    "minutes": 540
                 },
                 "equipment": {
                     "manufacturer" : "airbus",
@@ -386,6 +398,8 @@ export default function Rosters () {
     }
 
     const postRoster =() =>{
+
+        // const dbRef = collection()
         setDoc(doc(db, 'rosters', '0001_02_23'),rosterOne)
             .then(res=>console.log(res.data))
             .catch(err=>console.log(err))

@@ -4,8 +4,8 @@ import Loader from "../Loader/Loader"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import NextFlight from "../Widgets/NextFlight"
 import GroundActivity from "../Widgets/GroundActivity"
-// import WidgetLoader from "../WidgetLoader/WidgetLoader"
-// import Rosters from "../../assets/rosters/rosters"
+import TotalHours from '../Widgets/TotalHours'
+import Rosters from "../../assets/rosters/rosters"
 import Forecast from "../Widgets/Forecast"
 
 export default function Dashboard () {
@@ -80,20 +80,13 @@ export default function Dashboard () {
                     <div className="widget-main-container row">
                         <GroundActivity roster={currentRoster.activity}/>
 
-                        {/* <div className="widget-container col-4">
+                        <TotalHours roster={currentRoster.activity}/>
+                    
+                        <div className="widget-container col-4">
                             <div className="widget-border">
-                                <h3>Ground Activity</h3>
-                            </div>
-                        </div> */}
+                                <h3>Trolito</h3>
+                                <Rosters/>
 
-                        <div className="widget-container col-4">
-                            <div className="widget-border">
-                                <h3>Total hours</h3>
-                            </div>
-                        </div>
-                        <div className="widget-container col-4">
-                            <div className="widget-border">
-                                <h3>Your next flight</h3>
                             </div>
                         </div>
                     </div>
