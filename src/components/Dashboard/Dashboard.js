@@ -25,7 +25,7 @@ export default function Dashboard () {
         const currentSeconds = Math.round(Date.now()/1000)
 
         //Returns array with days where 'active' and 'flightActivity' are true (discards off and ground duty days)
-        const activeFlights = currentRoster.activity.filter(flight=>{
+        const activeFlights = currentRoster.data.activity.filter(flight=>{
             return(flight.active && flight.flightActivity)
         })
 
@@ -54,7 +54,7 @@ export default function Dashboard () {
             }
         }
     },[currentRoster, getNextFlight]);
-
+    
     return(
         <>
         <div className="dashboard-main-container container col-10">
@@ -78,9 +78,9 @@ export default function Dashboard () {
                         <Forecast flight={nextFlight}/>
                     </div>
                     <div className="widget-main-container row">
-                        <GroundActivity roster={currentRoster.activity}/>
+                        <GroundActivity roster={currentRoster.data.activity}/>
 
-                        <TotalHours roster={currentRoster.activity}/>
+                        <TotalHours roster={currentRoster.data.activity}/>
                     
                         <div className="widget-container col-4">
                             <div className="widget-border">

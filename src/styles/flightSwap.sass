@@ -15,27 +15,26 @@
 
 .swap-main-container .main
     height: 50%
-    margin: 18px 0
-    padding: 0 20px
+    // margin: 18px 20px
+    padding: 18px 20px
+    overflow: hidden
 
 .swap-inner-container
-    height: auto
     box-shadow: 0px 0px 20px 0px rgb(0, 0, 0,0.135)
     border-radius: 8px
     background-color: white
     padding: 25px 32px
     position: relative
+    height: 100%
+    overflow: scroll
+    max-height: 100%
 
-.swap-inner-container h3 
-    color: $lightblue
-    font-size: 1.4rem
-    opacity: 0.9
-    margin-bottom: 8%
 
 .swap-middle-btn-container
     display: flex
     justify-content: center
     align-items: center
+    height: auto
 
 .swap-middle-btn-div
     font-size: 1.5rem
@@ -46,6 +45,42 @@
 .swap-middle-btn-div:hover
     background-color: $yellow
     color: white
+
+.swap-wid-title
+    color: $lightblue
+    font-size: 1.4rem
+    opacity: 0.9
+    width: 100%
+    // height: 0%
+    position: sticky
+    top: 0 
+    background-color: white
+    // border: 1px solid red
+    margin-bottom: -3px
+    z-index: 1
+
+.flight-offer-card-container
+    height: auto
+    width: 100%
+    overflow: hidden
+    position: relative
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    padding: 8px 10px
+    z-index: 0
+
+.flight-offer-card
+    width: 100%
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.136)
+    border-radius: 7px
+    display: flex
+    margin-top: 12px
+    justify-content: space-evenly
+    align-items: center
+    padding: 5px
+    font-size: 0.9rem
 
 
 

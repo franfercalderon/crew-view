@@ -1,7 +1,7 @@
 import { createContext, useState , useEffect, useCallback} from "react";
 import app from "../fb";
 import { getFirestore } from "firebase/firestore";
-import {getDoc, doc, collection, query, where, getDocs} from 'firebase/firestore'
+import {getDoc, doc, collection, query, where, getDocs,updateDoc,FieldPath} from 'firebase/firestore'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const AppContext = createContext()
@@ -44,54 +44,66 @@ const AppProvider = ({children}) => {
 
     //This will me a memoized function that will be recreated when globalUser (in dependency array) changes. This function gets all rosters for user stored in globalUser
     const getUserRosters = useCallback(() =>{
-
-            //Declares empty array to be filled later.
-            let rostersArray = []
-
+            
             //Creates query for Firebase 
-            const q = query(collection(db, "rosters"), where("crewId", "==", globalUser.employeeId));
+            const crewIdRef = new FieldPath('data', 'crewId');
+            const q = query(collection(db, "rosters"), where(crewIdRef, "==", globalUser.employeeId));
+
+            //Gets seconds of current month 1st day, to match the desired roster published date in seconds.
+            const d = new Date()
+            const publishedDate = new Date(d.getFullYear(),d.getMonth(),1).getTime()/1000
 
             //Calls FB function to get all documents thats match the query ('crewId' == 'employeeId')
             getDocs(q)
                 .then((querySnapshot)=>{
-                    querySnapshot.forEach(doc=>{
 
-                        //Pushes each doc to the array
-                        rostersArray.push(doc.data())
+                    querySnapshot.forEach(doc=>{
+                        //Checks if published date matches current month, sets state with current Roster
+                        console.log(doc.data())
+                        if(doc.data().data.published.seconds === publishedDate){
+                            console.log(doc.id)
+                            setCurrentRoster({
+                                id: doc.id,
+                                data: doc.data().data
+                            })
+                        }
                     })
-                })
-                .then(()=>{
-                    getCurrentRoster(rostersArray)
                 })
                 .catch((err)=>{console.error(err.message)})
 
     },[globalUser])
-    
-    //This function return the current month roster
-    const getCurrentRoster = (rostersArray) => {
 
-        if(rostersArray.length > 0){
+    //Update flightOffered Status in roster
+    const updateIsOffrededInRoster = (offeredFlight) =>{
 
-            //Gets current timestamp in seconds
-            const currentDate =  Math.round(Date.now()/1000)
-    
-            //Creates a roster array including only those where 'published' date is in the past
-            const pastRosters = rostersArray.filter(roster =>{
-                return(
-                    roster.published.seconds <= currentDate
-                )
-            })
-    
-            //Sorts past rosters by published date and gets the biggest result (it will be the closest to currentDate)
-            const thisMonthRoster = pastRosters.sort((a,b) => a.published.seconds - b.published.seconds).reverse()[0]
-            
-            //Stores roster in State
-            return(setCurrentRoster(thisMonthRoster))
+        const newActivity = currentRoster.data.activity.map(flight=>{
+
+            //If flight matches any of the offeredFlights, sets isOffered to true
+            if (flight.flightId === offeredFlight.outboundFlight.flightId ||offeredFlight.inboundFlight.flightId === flight.flightId){
+                console.log(flight)
+                return{
+                    ...flight,
+                    isOffered: true
+                }
+            }
+            return(flight)
+        })
+
+        //Creates new roster to update in db and state
+        let updatedRoster = {
+            ...currentRoster, 
+            data: {...currentRoster.data, activity: newActivity}
         }
-        else{
-            setCurrentRoster({})
-        }
+
+        //Reference to user's Roster:
+        const userRosterRef = doc(db, "rosters", currentRoster.id)
+        //Updates in db
+        updateDoc(userRosterRef,updatedRoster)
+            //If succeeds, sets new state
+            .then(()=>setCurrentRoster(updatedRoster))
+            .catch((err)=>console.log(err.message))
     }
+
 
     //This function gets user info from DB and stores is in a State
     const updateContextUser = (email)=>{
@@ -147,7 +159,8 @@ const AppProvider = ({children}) => {
             globalUser,
             currentRoster,
             addZero,
-            capitalizeWords                           
+            capitalizeWords,
+            updateIsOffrededInRoster               
         }}>
             {children}
         </Provider>

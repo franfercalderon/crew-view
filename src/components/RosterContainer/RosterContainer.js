@@ -15,12 +15,11 @@ export default function RosterContainer (){
     //Gets roster from context
     const {currentRoster} = useContext(AppContext)
 
-
     useEffect(() => {
 
         if(currentRoster){
 
-            setPublishedDate(new Date(currentRoster.published.seconds*1000))
+            setPublishedDate(new Date(currentRoster.data.published.seconds*1000))
         }
        
         
@@ -29,7 +28,6 @@ export default function RosterContainer (){
     useEffect(() => {
 
         if(publishedDate) setIsLoading(false)
-        // console.log(currentRoster)
 
     }, [publishedDate])
 
@@ -44,7 +42,7 @@ export default function RosterContainer (){
                 <ErrorMessage title='Mayday! There are no rosters to show.'message='Please contact your manager.'/>
                 :
                 <>
-                    <h2>{new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date(currentRoster.published.seconds*1000))}'s Roster</h2>
+                    <h2>{new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date(currentRoster.data.published.seconds*1000))}'s Roster</h2>
                     <div className="roster-container-header row d-flex ">
                         {/* <div className="container d-flex"> */}
                             <p className="col-2 d-flex justify-content-center align-items-center">Date</p>
@@ -54,11 +52,11 @@ export default function RosterContainer (){
                             <p className="col-1 d-flex justify-content-center align-items-center">Departs</p>
                             <p className="col-1 d-flex justify-content-center align-items-center">Arrives</p>
                             <p className="col-2 d-flex justify-content-center align-items-center">Check In</p>
-                            <p className="col-2 d-flex justify-content-center align-items-center">Swap</p>
+                            <p className="col-2 d-flex justify-content-center align-items-center">Post Flight</p>
                         {/* </div> */}
                     </div>
                     <div className="roster-container">
-                        {currentRoster.activity.map((day, idx)=>{
+                        {currentRoster.data.activity.map((day, idx)=>{
                             return(
                                 <FlightCard day={day} key={idx}/>
                             )
