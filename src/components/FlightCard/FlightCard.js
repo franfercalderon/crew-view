@@ -1,10 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faArrowsRotate} from "@fortawesome/free-solid-svg-icons"
 import { AppContext } from '../../context/AppContext'
 import { useContext, useState } from 'react'
 import app from "../../fb"
 import Swal from 'sweetalert2'
-import {getFirestore, collection, addDoc} from 'firebase/firestore'
+import {getFirestore, collection, addDoc, query, where,FieldPath, deleteDoc, getDocs} from 'firebase/firestore'
 import Loader from '../Loader/Loader'
 import { useNavigate } from 'react-router-dom'
 
@@ -24,51 +22,102 @@ export default function FlightCard ({day}){
     const navigate = useNavigate()
 
     //FUNCTIONS
-    const handleSwap = (day) =>{
+    //Gets return flight for swap selected flight
+    const getReturnFlight = (day) => {
 
-        //Returns array with just flying days
+        
+        // Returns array with just flying days
         const flightDays = currentRoster.data.activity.filter(day=>day.flightActivity)
-
+        
         //Sorts array 
         const sortedRoster = flightDays.sort((a,b)=>{
             return a.date.seconds - b.date.seconds
         })
-
+        
         //Finds return flight, being this the next one in order by date
-        const returnFlight = sortedRoster.find(flight=>flight.date.seconds>day.date.seconds)
+        const returnFlight = sortedRoster.find(flight=>flight.date.seconds > day.date.seconds)
+        return returnFlight
+    }
+    
+    //When swap buttons are clicked:
+    const handleSwap = (day) => {
+        
+        //Gets 'return' activity for this flight
+        const returnFlight = getReturnFlight(day)
 
         const offeredFlight = {
             crewId: currentRoster.data.crewId,
             outboundFlight: day,
             inboundFlight: returnFlight
         }
+        //Checks if flight was open for swap
+        if(!day.isOffered){
 
-        Swal
-            .fire({
-                // title: 'Oops!',
-                text: 'Do you want to post this flight?',
-                icon: 'info',
-                iconColor: '#FFC106',
-                showDenyButton: true,
-                denyButtonText:'Cancel',
-                confirmButtonText: 'Post flight',
-                buttonsStyling: false,
-                customClass:{
-                    confirmButton: 'btn btn-primary alert-btn order-2',
-                    denyButton: 'btn btn-light alert-btn order-1',
-                    popup: 'alert-container'
-                }
-            })
-            .then(res=>{
-                if(res.isConfirmed){
-                    postOffer(offeredFlight)
-                }
-            })
-
-
+            Swal
+                .fire({
+                    text: 'Do you want to post this flight?',
+                    icon: 'info',
+                    iconColor: '#FFC106',
+                    showDenyButton: true,
+                    denyButtonText:'Cancel',
+                    confirmButtonText: 'Post flight',
+                    buttonsStyling: false,
+                    customClass:{
+                        confirmButton: 'btn btn-primary alert-btn order-2',
+                        denyButton: 'btn btn-light alert-btn order-1',
+                        popup: 'alert-container'
+                    }
+                })
+                .then(res=>{
+                    if(res.isConfirmed){
+                        postOffer(offeredFlight)
+                    }
+                })
+        }
+        else{
+            Swal
+                .fire({
+                    text: 'Do you want to close this flight?',
+                    icon: 'info',
+                    iconColor: '#FFC106',
+                    showDenyButton: true,
+                    denyButtonText:'Cancel',
+                    confirmButtonText: 'Close flight',
+                    buttonsStyling: false,
+                    customClass:{
+                        confirmButton: 'btn btn-primary alert-btn order-2',
+                        denyButton: 'btn btn-light alert-btn order-1',
+                        popup: 'alert-container'
+                    }
+                })
+                .then(res=>{
+                    if(res.isConfirmed){
+                        deleteOffer(offeredFlight)
+                    }
+                })
+        }
     }
 
+    const deleteOffer = (offeredFlight) => {
 
+        //Sets loader to true
+        setIsLoading(true)
+
+        //Creates ref in db where flight id matches
+        const flightIdPath = new FieldPath('outboundFlight', 'flightId');
+        const q = query(collection(db,'flightOffers'), where(flightIdPath,'==',offeredFlight.outboundFlight.flightId))
+
+        //Gets docs from 
+        getDocs(q)
+            .then(snap=>{
+                snap.forEach(doc=>deleteDoc(doc.ref))
+            })
+            .then(()=>updateIsOffrededInRoster(offeredFlight))
+            .finally(()=>setIsLoading(false))
+            .catch((err)=>console.log(err.message))
+    }
+
+    //Creates document in db with flights (outbound and inbound) offer
     const postOffer = (offeredFlight) =>{
 
         //Sets loader to true
@@ -225,14 +274,13 @@ export default function FlightCard ({day}){
             </p>
             <div className="col-2 d-flex justify-content-center align-items-center">
                 {day.active && day.flightActivity && day.departure.fromHub && !day.isOffered ?
-
-                    <div className='btn btn-warning swap-btn ' onClick={()=>handleSwap(day)}>
-                        <FontAwesomeIcon icon={faArrowsRotate}/>
-                    </div>
+                    <input type='button' className='btn btn-primary swap-btn-list' value='Open' onClick={()=>handleSwap(day)}/>
+                    
                 :
                 <>
-                    {day.active && day.flightActivity && day.isOffered &&
-                        <p><i>Posted</i></p> 
+                    {day.active && day.flightActivity && day.isOffered && day.departure.fromHub &&
+                        <input type='button' className='btn btn-danger swap-btn-list' value='Close' onClick={()=>handleSwap(day)} />
+                        
                     }
                 </>
                 }

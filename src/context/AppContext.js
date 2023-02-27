@@ -78,12 +78,12 @@ const AppProvider = ({children}) => {
 
         const newActivity = currentRoster.data.activity.map(flight=>{
 
-            //If flight matches any of the offeredFlights, sets isOffered to true
+            //If flight matches any of the offeredFlights, sets isOffered to opposite boolean
             if (flight.flightId === offeredFlight.outboundFlight.flightId ||offeredFlight.inboundFlight.flightId === flight.flightId){
                 console.log(flight)
                 return{
                     ...flight,
-                    isOffered: true
+                    isOffered: !flight.isOffered
                 }
             }
             return(flight)

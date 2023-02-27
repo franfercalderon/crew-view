@@ -52,7 +52,7 @@ export default function RosterContainer (){
                             <p className="col-1 d-flex justify-content-center align-items-center">Departs</p>
                             <p className="col-1 d-flex justify-content-center align-items-center">Arrives</p>
                             <p className="col-2 d-flex justify-content-center align-items-center">Check In</p>
-                            <p className="col-2 d-flex justify-content-center align-items-center">Post Flight</p>
+                            <p className="col-2 d-flex justify-content-center align-items-center">Flight Swap</p>
                         {/* </div> */}
                     </div>
                     <div className="roster-container">
