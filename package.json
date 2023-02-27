@@ -2,7 +2,7 @@
   "name": "crew-view-project",
   "version": "0.1.0",
   "private": false,
-  "homepage": "http://franfercalderon.github.io/crew-view",
+  "homepage": "https://franfercalderon.github.io/crew-view",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
