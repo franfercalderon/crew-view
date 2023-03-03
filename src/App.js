@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-    <BrowserRouter basename='/crew-view'>
+    <BrowserRouter >
       <AppProvider>
         <Routes>
           <Route exact path='/' element={<Home/>}/>

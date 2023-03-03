@@ -12,6 +12,9 @@ export default function RosterContainer (){
     const [isLoading, setIsLoading] = useState(true)
     const [publishedDate, setPublishedDate] = useState(null)
 
+    //Gets current seconds to compare if flights have departed
+    const currentSeconds = Math.round(Date.now()/1000)
+
     //Gets roster from context
     const {currentRoster} = useContext(AppContext)
 
@@ -43,25 +46,25 @@ export default function RosterContainer (){
                 :
                 <>
                     <h2>{new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date(currentRoster.data.published.seconds*1000))}'s Roster</h2>
-                    <div className="roster-container-header row d-flex ">
-                        {/* <div className="container d-flex"> */}
-                            <p className="col-2 d-flex justify-content-center align-items-center">Date</p>
-                            <p className="col-2 d-flex justify-content-center align-items-center">Activity</p>
-                            <p className="col-1 d-flex justify-content-center align-items-center">From</p>
-                            <p className="col-1 d-flex justify-content-center align-items-center">To</p>
-                            <p className="col-1 d-flex justify-content-center align-items-center">Departs</p>
-                            <p className="col-1 d-flex justify-content-center align-items-center">Arrives</p>
-                            <p className="col-2 d-flex justify-content-center align-items-center">Check In</p>
-                            <p className="col-2 d-flex justify-content-center align-items-center">Flight Swap</p>
-                        {/* </div> */}
-                    </div>
-                    <div className="roster-container">
-                        {currentRoster.data.activity.map((day, idx)=>{
-                            return(
-                                <FlightCard day={day} key={idx}/>
-                            )
-                        })}
+                    <div className="main d-flex row">
+                        <div className="roster-container-header row d-flex ">
+                                <p className="col-2 d-flex justify-content-center align-items-center">Date</p>
+                                <p className="col-2 d-flex justify-content-center align-items-center">Activity</p>
+                                <p className="col-1 d-flex justify-content-center align-items-center">From</p>
+                                <p className="col-1 d-flex justify-content-center align-items-center">To</p>
+                                <p className="col-1 d-flex justify-content-center align-items-center">Departs</p>
+                                <p className="col-1 d-flex justify-content-center align-items-center">Arrives</p>
+                                <p className="col-2 d-flex justify-content-center align-items-center">Check In</p>
+                                <p className="col-2 d-flex justify-content-center align-items-center">Flight Swap</p>
+                        </div>
+                        <div className="roster-container">
+                            {currentRoster.data.activity.map((day, idx)=>{
+                                return(
+                                    <FlightCard day={day} key={idx} currentSeconds={currentSeconds}/>
+                                )
+                            })}
 
+                        </div>
                     </div>
 
                 </>

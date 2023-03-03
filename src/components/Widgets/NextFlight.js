@@ -1,10 +1,12 @@
 import { useContext } from "react"
 import { AppContext } from "../../context/AppContext"
+import WidgetLoader from "../WidgetLoader/WidgetLoader"
 
 export default function NextFlight ({flight}) {
     
-    //Gets functions from context
+    //CONTEXT
     const {addZero, capitalizeWords} = useContext(AppContext)
+
 
     //Gets new Date object from next flight departure time
     const flightDate = new Date(flight.departure.time.seconds*1000)
@@ -24,11 +26,13 @@ export default function NextFlight ({flight}) {
         minute: addZero(flightDate.getMinutes())
     }
 
-
     return(
         <div className="widget-container col-8">
             <div className="widget-border">
                 <h3>Your next flight</h3>
+                {!flight && !flightActualDate?
+                <WidgetLoader/>
+                :
                 <div className="wid-inner-div row">
                     <div className="col-4 next-flight-inner-div border-div">
                         <div className="main">                       
@@ -64,6 +68,7 @@ export default function NextFlight ({flight}) {
                         <p className="title">Aircraft</p>
                     </div>
                 </div>                
+                }
             </div>
         </div>
     )

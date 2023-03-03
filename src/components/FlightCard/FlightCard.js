@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 //Initialize Cloud Firestore and get reference to the service
 const db = getFirestore(app)
 
-export default function FlightCard ({day}){
+export default function FlightCard ({day, currentSeconds}){
 
     //STATES
     const [isLoading, setIsLoading] = useState(false)
@@ -22,6 +22,7 @@ export default function FlightCard ({day}){
     const navigate = useNavigate()
 
     //FUNCTIONS
+    
     //Gets return flight for swap selected flight
     const getReturnFlight = (day) => {
 
@@ -47,9 +48,11 @@ export default function FlightCard ({day}){
 
         const offeredFlight = {
             crewId: currentRoster.data.crewId,
+            rosterId: currentRoster.id,
             outboundFlight: day,
             inboundFlight: returnFlight
         }
+
         //Checks if flight was open for swap
         if(!day.isOffered){
 
@@ -273,14 +276,21 @@ export default function FlightCard ({day}){
                 </>}
             </p>
             <div className="col-2 d-flex justify-content-center align-items-center">
-                {day.active && day.flightActivity && day.departure.fromHub && !day.isOffered ?
-                    <input type='button' className='btn btn-primary swap-btn-list' value='Open' onClick={()=>handleSwap(day)}/>
-                    
+
+                {day.active && day.flightActivity && currentSeconds> day.departure.time.seconds ?
+                    <p><i>Departed</i></p>
                 :
                 <>
-                    {day.active && day.flightActivity && day.isOffered && day.departure.fromHub &&
-                        <input type='button' className='btn btn-danger swap-btn-list' value='Close' onClick={()=>handleSwap(day)} />
+                    {day.active && day.flightActivity && day.departure.fromHub && !day.isOffered ?
+                        <input type='button' className='btn btn-primary swap-btn-list' value='Open' onClick={()=>handleSwap(day)}/>
                         
+                    :
+                    <>
+                        {day.active && day.flightActivity && day.isOffered && day.departure.fromHub &&
+                            <input type='button' className='btn btn-danger swap-btn-list' value='Close' onClick={()=>handleSwap(day)} />
+                            
+                        }
+                    </>
                     }
                 </>
                 }

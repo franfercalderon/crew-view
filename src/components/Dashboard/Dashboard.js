@@ -19,7 +19,6 @@ export default function Dashboard () {
 
     //FUNCTIONS
     const getNextFlight = useCallback(() => {
-        console.log(currentRoster)
 
         //Gets current date in seconds
         const currentSeconds = Math.round(Date.now()/1000)
@@ -28,14 +27,18 @@ export default function Dashboard () {
         const activeFlights = currentRoster.data.activity.filter(flight=>{
             return(flight.active && flight.flightActivity)
         })
-
+        
         //Returns array with upcoming flights
         const futureFlights = activeFlights.filter(flight=>{
+            // console.log('flight departure '+new Date (flight.departure.time.seconds*1000))
+            // console.log('current time is '+ new Date (currentSeconds*1000))
             return(flight.departure.time.seconds >= currentSeconds)
         })
         
         //Sorts future flight by departure timestamp and sets state with next flight
         const upcomingFlight = futureFlights.sort((a,b)=> a.departure.seconds - b.departure.seconds)[0]
+        
+        // console.log(upcomingFlight)
         setNextFlight(upcomingFlight)
 
 
@@ -54,7 +57,9 @@ export default function Dashboard () {
             }
         }
     },[currentRoster, getNextFlight]);
-    
+    // return(
+    //     <Rosters/>
+    // )
     return(
         <>
         <div className="dashboard-main-container container col-10">
@@ -62,6 +67,7 @@ export default function Dashboard () {
                 <Loader/>
                 :
                 <>
+                {/* <NextFlight flight={nextFlight}/> */}
                 
                 {Object.keys(currentRoster).length === 0 ?
 

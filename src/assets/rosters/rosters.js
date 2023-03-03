@@ -7,428 +7,22 @@ const db = getFirestore(app)
 
 export default function Rosters () {
 
+    const ezemad = (year,monthIndex, date) =>{
 
-    const rosterOne = {
-        'data':{
-            "crewId": "0001",
-            "published": new Date(2023,1,1),
-            "activity": [
-                {
-                    "active": false,
-                    "date": new Date(2023,1,1)
-                },
-                {
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,2,23,55)
-                    },
-                    "arrival": {
-                        "airportCode": "mad",
-                        "city": "madrid",
-                        "airport": "adolfo suarez intl.",
-                        "time": new Date(2023,1,3,16,10)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flight": "ar1132",
-                    'isOffered': false,
-                    "active": true,
-                    'flightId': uuidv4(),
-                    "flightActivity": true,
-                    'international':true,
-                    "date": new Date(2023,1,2),
-                    "duration": {
-                        "minutes": 715
-                    }
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,3)
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,4)
-                },
-                {
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "active": true,
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "mad",
-                        "city": "madrid",
-                        "airport": "adolfo suarez intl.",
-                        "time": new Date(2023,1,5,18,50)
-                    },
-                    "arrival": {
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,6,4,0)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "duration": {
-                        "minutes": 793
-                    },
-                    "date": new Date(2023,1,5),
-                    "flight": "ar1131"
-                },
-                {
-                    "date": new Date(2023,1,6),
-                    "active": false
-                },
-                {
-                    "duration": {
-                        "minutes": 665
-                    },
-                    "flight": "ar1300",
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,7,23,25)
-                    },
-                    "arrival": {
-                        "airportCode": "jfk",
-                        "airportName": "john f. kennedy intl.",
-                        "city": "new york",
-                        "time": new Date(2023,1,8,9,30)
-                    },
-                    "active": true,
-                    "date": new Date(2023,1,7)
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,8)
-                },
-                {
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "active": true,
-                    "duration": {
-                        "minutes": 655
-                    },
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "jfk",
-                        "airportName": "john f. kennedy intl.",
-                        "city": "new york",
-                        "time": new Date(2023,1,9,16,35)
-                    },
-                    "arrival": {
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,10,4,30)
-                    },
-                    "flight": "ar1301",
-                    "date": new Date(2023,1,9)
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,10)
-                },
-                {
-                    "date": new Date(2023,1,11),
-                    "flight": "ar1668",
-                    "equipment": {
-                        "manufacturer" : "boeing",
-                        "model" : "737-800 max",
-                        "img" : "/images/aircrafts/b737m.jpeg"
-                    },
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "aep",
-                        "airportName": "aeroparque j.newbery",
-                        "city": "buenos aires",
-                        "time": new Date(2023,1,11,13,20)
-                    },
-                    "arrival": {
-                        "airportCode": "brc",
-                        "city": "bariloche",
-                        "airport": "tte. Luis Candelaria intl.",
-                        "time": new Date(2023,1,11,15,45)
-                    },
-                    "flightActivity": true,
-                    'international':false,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "active": true,
-                    "duration": {
-                        "minutes": 145
-                    }
-                },
-                {
-                    "flightActivity": true,
-                    'international':false,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "date": new Date(2023,1,12),
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "brc",
-                        "city": "bariloche",
-                        "airport": "tte. Luis Candelaria intl.",
-                        "time": new Date(2023,1,12,17,10)
-                    },
-                    "arrival": {
-                        "airportCode": "aep",
-                        "airportName": "aeroparque j.newbery",
-                        "city": "buenos aires",
-                        "time": new Date(2023,1,12,19,15)
-                    },
-                    "flight": "ar1669",
-                    "equipment": {
-                        "manufacturer" : "boeing",
-                        "model" : "737-800 max",
-                        "img" : "/images/aircrafts/b737m.jpeg"
-                    },
-                    "active": true,
-                    "duration": {
-                        "minutes": 125
-                    }
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,13),
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,14),
-                },
-                {
-                    "date": new Date(2023,1,15),
-                    "active": true,
-                    "arrival": {
-                        "airportCode": "fco",
-                        "city": "rome",
-                        "airport": "fiumicino intl.",
-                        "time": new Date(2023,1,16,17,0)
-                    },
-                    "duration": {
-                        "minutes": 800
-                    },
-                    "flight": "ar1140",
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,15,22,40)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,16)
-                },
-                {
-                    "date": new Date(2023,1,17),
-                    "active": false
-                },
-                {
-                    "flight": "ar1141",
-                    "date": new Date(2023,1,18),
-                    "arrival": {
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,19,4,40)
-                    },
-                    "active": true,
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "fco",
-                        "city": "rome",
-                        "airport": "fiumicino intl.",
-                        "time": new Date(2023,1,18,18,15)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "duration": {
-                        "minutes": 865
-                    }
-                },
-                {
-                    "date": new Date(2023,1,19),
-                    "active": false
-                },
-                {
-                    "duty": {
-                        "description": "recurrent",
-                        "ends": new Date(2023,1,20,18,0),
-                        "starts": new Date(2023,1,20,9,0)
-                    },
-                    "date": new Date(2023,1,20),
-                    "active": true,
-                    "flightActivity": false
-                },
-                {
-                    "duty": {
-                        "description": "recurrent",
-                        "ends": new Date(2023,1,21,18,0),
-                        "starts": new Date(2023,1,21,9,0)
-                    },
-                    "date": new Date(2023,1,21),
-                    "active": true,
-                    "flightActivity": false
-                },
-                {
-                    "duty": {
-                        "description": "recurrent",
-                        "ends": new Date(2023,1,22,18,0),
-                        "starts": new Date(2023,1,22,9,0)
-                    },
-                    "date": new Date(2023,1,22),
-                    "active": true,
-                    "flightActivity": false
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,23)
-                },
-                {
-                    "date": new Date(2023,1,24),
-                    "active": false
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,25),
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,26),
-                },
-                {
-                    "active": true,
-                    "date": new Date(2023,1,27),
-                    "flight": "ar1304",
-                    "arrival": {
-                        "airportCode": "mia",
-                        "city" : "miami",
-                        "airport": "miami intl.",
-                        "time": new Date(2023,1,27,14,40)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "eze",
-                        "city" : "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,27,7,30)
-                    },
-                    "duration": {
-                        "minutes": 550
-                    }
-                },
-                {
-                    "date": new Date(2023,1,28),
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "mia",
-                        "city" : "miami",
-                        "airport": "miami intl.",
-                        "time": new Date(2023,1,28,17,0)
-                    },
-                    
-                    "active": true,
-                    "arrival": {
-                        "airportCode": "eze",
-                        "city" : "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,2,1,4,0)
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "flight": "ar1303",
-                    "duration": {
-                        "minutes": 540
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    }
-                }
-            ]
-        }
-    }
-
-    const rosterTwo = {
-        "crewId": "0001",
-        "published": new Date(2023,2,1),
-        "activity": [
-            {
-                "active": false,
-                "date": new Date(2023,2,1)
-            },
+        return(
             {
                 "departure": {
                     'fromHub': true,
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,1,2,23,55)
+                    "time": new Date(year,monthIndex,date,23,55)
                 },
                 "arrival": {
                     "airportCode": "mad",
                     "city": "madrid",
                     "airport": "adolfo suarez intl.",
-                    "time": new Date(2023,1,3,16,10)
+                    "time": new Date(year,monthIndex,date+1,16,10)
                 },
                 "equipment": {
                     "manufacturer" : "airbus",
@@ -441,19 +35,16 @@ export default function Rosters () {
                 'isOffered': false,
                 "flightActivity": true,
                 'international':true,
-                "date": new Date(2023,2,2),
+                "date": new Date(year,monthIndex,date),
                 "duration": {
                     "minutes": 715
                 }
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,3)
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,4)
-            },
+            }
+        )
+    }
+
+    const madeze = (year,monthIndex, date) =>{
+        return(
             {
                 "flightActivity": true,
                 'international':true,
@@ -465,13 +56,13 @@ export default function Rosters () {
                     "airportCode": "mad",
                     "city": "madrid",
                     "airport": "adolfo suarez intl.",
-                    "time": new Date(2023,1,5,18,50)
+                    "time": new Date(year,monthIndex, date,18,50)
                 },
                 "arrival": {
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,1,6,4,0)
+                    "time": new Date(year,monthIndex, date+1,4,0)
                 },
                 "equipment": {
                     "manufacturer" : "airbus",
@@ -481,13 +72,14 @@ export default function Rosters () {
                 "duration": {
                     "minutes": 793
                 },
-                "date": new Date(2023,2,5),
+                "date": new Date(year,monthIndex, date),
                 "flight": "ar1131"
-            },
-            {
-                "date": new Date(2023,2,6),
-                "active": false
-            },
+            }
+        )
+    }
+
+    const ezejfk = (year,monthIndex, date) =>{
+        return(
             {
                 "duration": {
                     "minutes": 665
@@ -507,21 +99,22 @@ export default function Rosters () {
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,1,7,23,25)
+                    "time": new Date(year,monthIndex, date,23,25)
                 },
                 "arrival": {
                     "airportCode": "jfk",
-                    "airportName": "john f. kennedy intl.",
+                    "airport": "john f. kennedy intl.",
                     "city": "new york",
-                    "time": new Date(2023,1,8,9,30)
+                    "time": new Date(year,monthIndex, date+1,9,30)
                 },
                 "active": true,
-                "date": new Date(2023,2,7)
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,8)
-            },
+                "date": new Date(year,monthIndex, date)
+            }
+        )
+    }
+
+    const jfkeze = (year,monthIndex, date) =>{
+        return(
             {
                 "equipment": {
                     "manufacturer" : "airbus",
@@ -539,99 +132,33 @@ export default function Rosters () {
                 "departure": {
                     'fromHub': false,
                     "airportCode": "jfk",
-                    "airportName": "john f. kennedy intl.",
+                    "airport": "john f. kennedy intl.",
                     "city": "new york",
-                    "time": new Date(2023,1,9,16,35)
+                    "time": new Date(year,monthIndex, date,16,35)
                 },
                 "arrival": {
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,1,10,4,30)
+                    "time": new Date(year,monthIndex, date+1,4,30)
                 },
                 "flight": "ar1301",
-                "date": new Date(2023,2,9)
-            },
+                "date": new Date(year,monthIndex, date)
+            }
+            
+        )
+    }
+
+    const ezefco =  (year,monthIndex, date) =>{
+        return(
             {
-                "active": false,
-                "date": new Date(2023,2,10)
-            },
-            {
-                "date": new Date(2023,2,11),
-                "flight": "ar1668",
-                "equipment": {
-                    "manufacturer" : "boeing",
-                    "model" : "737-800 max",
-                    "img" : "/images/aircrafts/b737m.jpeg"
-                },
-                "departure": {
-                    'fromHub': true,
-                    "airportCode": "aep",
-                    "airportName": "aeroparque j.newbery.",
-                    "city": "buenos aires",
-                    "time": new Date(2023,1,11,13,20)
-                },
-                "arrival": {
-                    "airportCode": "brc",
-                    "city": "bariloche",
-                    "airport": "tte. Luis Candelaria intl.",
-                    "time": new Date(2023,1,11,15,45)
-                },
-                "flightActivity": true,
-                'international':false,
-                'flightId': uuidv4(),
-                'isOffered': false,
-                "active": true,
-                "duration": {
-                    "minutes": 145
-                }
-            },
-            {
-                "flightActivity": true,
-                'international':false,
-                'flightId': uuidv4(),
-                'isOffered': false,
-                "date": new Date(2023,2,12),
-                "departure": {
-                    'fromHub': false,
-                    "airportCode": "brc",
-                    "city": "bariloche",
-                    "airport": "tte. Luis Candelaria intl.",
-                    "time": new Date(2023,1,12,17,10)
-                },
-                "arrival": {
-                    "airportCode": "aep",
-                    "airportName": "aeroparque j.newbery.",
-                    "city": "buenos aires",
-                    "time": new Date(2023,1,11,19,15)
-                },
-                "flight": "ar1669",
-                "equipment": {
-                    "manufacturer" : "boeing",
-                    "model" : "737-800 max",
-                    "img" : "/images/aircrafts/b737m.jpeg"
-                },
-                "active": true,
-                "duration": {
-                    "minutes": 125
-                }
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,13),
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,14),
-            },
-            {
-                "date": new Date(2023,2,15),
+                "date": new Date(year,monthIndex, date),
                 "active": true,
                 "arrival": {
                     "airportCode": "fco",
                     "city": "rome",
                     "airport": "fiumicino intl.",
-                    "time": new Date(2023,1,16,17,0)
+                    "time": new Date(year,monthIndex, date+1,17,0)
                 },
                 "duration": {
                     "minutes": 800
@@ -642,7 +169,7 @@ export default function Rosters () {
                     "airportCode": "eze",
                     "city": "buenos aires",
                     "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,1,15,22,40)
+                    "time": new Date(year,monthIndex, date,22,40)
                 },
                 "equipment": {
                     "manufacturer" : "airbus",
@@ -653,35 +180,30 @@ export default function Rosters () {
                 'international':true,
                 'flightId': uuidv4(),
                 'isOffered': false
-            },
+            }
+        )
+    }
+    
+    const fcoeze =  (year,monthIndex, date) =>{
+        return(
             {
-                "active": false,
-                "date": new Date(2023,2,16)
-            },
-            {
-                "date": new Date(2023,2,17),
-                "active": false
-            },
-            {
-                "flight": "ar1141",
-                "date": new Date(2023,2,18),
-                "arrival": {
-                    "airportCode": "eze",
-                    "city": "buenos aires",
-                    "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,1,19,4,40)
-                },
-                "active": true,
                 "flightActivity": true,
                 'international':true,
                 'flightId': uuidv4(),
                 'isOffered': false,
+                "active": true,
                 "departure": {
                     'fromHub': false,
                     "airportCode": "fco",
                     "city": "rome",
-                    "airport": "fiumicino intl.",
-                    "time": new Date(2023,1,18,18,15)
+                    "airport": "fiumincino intl.",
+                    "time": new Date(year,monthIndex, date,18,15)
+                },
+                "arrival": {
+                    "airportCode": "eze",
+                    "city": "buenos aires",
+                    "airport": "ministro pistarini intl.",
+                    "time": new Date(year,monthIndex, date+1,4,40)
                 },
                 "equipment": {
                     "manufacturer" : "airbus",
@@ -690,67 +212,308 @@ export default function Rosters () {
                 },
                 "duration": {
                     "minutes": 865
+                },
+                "date": new Date(year,monthIndex, date),
+                "flight": "ar1141"
+            }
+        )
+    }
+
+    const aeplim = (year,monthIndex, date) =>{
+        return(
+            {
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
+                },
+                "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
+                'isOffered': false,
+                "active": true,
+                "duration": {
+                    "minutes": 290
+                },
+                "departure": {
+                    'fromHub': true,
+                    "airportCode": "aep",
+                    "city": "buenos aires",
+                    "airport": "aeroparque j.newbery",
+                    "time": new Date(year,monthIndex, date,18,45)
+                },
+                "arrival": {
+                    "airportCode": "lim",
+                    "airport": "jorge chavez intl.",
+                    "city": "lima",
+                    "time": new Date(year,monthIndex, date,21,35)
+                },
+                "flight": "ar1364",
+                "date": new Date(year,monthIndex, date)
+            }
+            
+        )
+    }
+
+    const limaep = (year,monthIndex, date) =>{
+        
+        return(
+            {
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
+                },
+                "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
+                'isOffered': false,
+                "active": true,
+                "duration": {
+                    "minutes": 260
+                },
+                "departure": {
+                    'fromHub': false,
+                    "airportCode": "lim",
+                    "airport": "jorge chavez intl.",
+                    "city": "lima",
+                    "time": new Date(year,monthIndex, date,22,50)
+                },
+                "arrival": {
+                    "airportCode": "aep",
+                    "city": "buenos aires",
+                    "airport": "aeroparque j.newbery",
+                    "time": new Date(year,monthIndex, date+1,5,10)
+                },
+                "flight": "ar1365",
+                "date": new Date(year,monthIndex, date)
+            }
+            
+        )
+    }
+
+    const aepmdz = (year,monthIndex, date) =>{
+
+        return(
+            {
+                "date": new Date(year,monthIndex, date),
+                "flight": "ar1400",
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
+                },
+                "departure": {
+                    'fromHub': true,
+                    "airportCode": "aep",
+                    "airport": "aeroparque j.newbery.",
+                    "city": "buenos aires",
+                    "time": new Date(year,monthIndex, date,5,55)
+                },
+                "arrival": {
+                    "airportCode": "mdz",
+                    "city": "mendoza",
+                    "airport": "el plumerillo intl.",
+                    "time": new Date(year,monthIndex, date,7,50)
+                },
+                "flightActivity": true,
+                'international':false,
+                'flightId': uuidv4(),
+                'isOffered': false,
+                "active": true,
+                "duration": {
+                    "minutes": 115
                 }
-            },
+            }
+        )
+    }
+
+    const mdzaep = (year,monthIndex, date) =>{
+        return(
             {
-                "date": new Date(2023,2,19),
-                "active": false
-            },
-            {
-                "duty": {
-                    "description": "recurrent",
-                    "ends": new Date(2023,1,20,18,0),
-                    "starts": new Date(2023,1,20,9,0)
+                "date": new Date(year,monthIndex, date),
+                "flight": "ar1401",
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
                 },
-                "date": new Date(2023,2,20),
-                "active": true,
-                "flightActivity": false
-            },
-            {
-                "duty": {
-                    "description": "recurrent",
-                    "ends": new Date(2023,1,21,18,0),
-                    "starts": new Date(2023,1,21,9,0)
+                "departure": {
+                    'fromHub': false,
+                    "airportCode": "mdz",
+                    "city": "mendoza",
+                    "airport": "el plumerillo intl.",
+                    "time": new Date(year,monthIndex, date,8,40)
                 },
-                "date": new Date(2023,2,21),
-                "active": true,
-                "flightActivity": false
-            },
-            {
-                "duty": {
-                    "description": "recurrent",
-                    "ends": new Date(2023,1,22,18,0),
-                    "starts": new Date(2023,1,22,9,0)
+                "arrival": {
+                    "airportCode": "aep",
+                    "airport": "aeroparque j.newbery.",
+                    "city": "buenos aires",
+                    "time": new Date(year,monthIndex, date,10,15)
                 },
-                "date": new Date(2023,2,22),
+                "flightActivity": true,
+                'international':false,
+                'flightId': uuidv4(),
+                'isOffered': false,
                 "active": true,
-                "flightActivity": false
-            },
+                "duration": {
+                    "minutes": 95
+                }
+            }
+        )
+    }
+
+    const aepbrc = (year,monthIndex, date) =>{
+        return(
             {
-                "active": false,
-                "date": new Date(2023,2,23)
-            },
+                "date": new Date(year,monthIndex, date),
+                "flight": "ar1668",
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
+                },
+                "departure": {
+                    'fromHub': true,
+                    "airportCode": "aep",
+                    "airport": "aeroparque j.newbery.",
+                    "city": "buenos aires",
+                    "time": new Date(year,monthIndex, date,13,20)
+                },
+                "arrival": {
+                    "airportCode": "brc",
+                    "city": "bariloche",
+                    "airport": "tte. Luis Candelaria intl.",
+                    "time": new Date(year,monthIndex, date,15,45)
+                },
+                "flightActivity": true,
+                'international':false,
+                'flightId': uuidv4(),
+                'isOffered': false,
+                "active": true,
+                "duration": {
+                    "minutes": 145
+                }
+            }
+        )
+    }
+
+    const brcaep = (year,monthIndex, date) =>{
+        return(
             {
-                "date": new Date(2023,2,24),
-                "active": false
-            },
+                "date": new Date(year,monthIndex, date),
+                "flight": "ar1669",
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
+                },
+                "departure": {
+                    'fromHub': false,
+                    "airportCode": "brc",
+                    "city": "bariloche",
+                    "airport": "tte. Luis Candelaria intl.",
+                    "time": new Date(year,monthIndex, date,17,10)
+                },
+                "arrival": {
+                    "airportCode": "aep",
+                    "airport": "aeroparque j.newbery.",
+                    "city": "buenos aires",
+                    "time": new Date(year,monthIndex, date,19,15)
+                },
+                "flightActivity": true,
+                'international':false,
+                'flightId': uuidv4(),
+                'isOffered': false,
+                "active": true,
+                "duration": {
+                    "minutes": 125
+                }
+            }
+        )
+    }
+
+    const ezegig = (year,monthIndex, date) =>{
+        return(
             {
-                "active": false,
-                "date": new Date(2023,2,25),
-            },
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
+                },
+                "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
+                'isOffered': false,
+                "active": true,
+                "duration": {
+                    "minutes": 180
+                },
+                "departure": {
+                    'fromHub': true,
+                    "airportCode": "eze",
+                    "city": "buenos aires",
+                    "airport": "ministro pistarini intl.",
+                    "time": new Date(year,monthIndex, date,6,30)
+                },
+                "arrival": {
+                    "airportCode": "gig",
+                    "airport": "galeao intl.",
+                    "city": "rio de janeiro",
+                    "time": new Date(year,monthIndex, date,9,30)
+                },
+                "flight": "ar1260",
+                "date": new Date(year,monthIndex, date)
+            }
+        )
+    }
+
+    const gigeze = (year,monthIndex, date) =>{
+        return(
             {
-                "active": false,
-                "date": new Date(2023,2,26),
-            },
+                "equipment": {
+                    "manufacturer" : "boeing",
+                    "model" : "737-800 max",
+                    "img" : "/images/aircrafts/b737m.jpeg"
+                },
+                "flightActivity": true,
+                'international':true,
+                'flightId': uuidv4(),
+                'isOffered': false,
+                "active": true,
+                "duration": {
+                    "minutes": 200
+                },
+                "departure": {
+                    'fromHub': false,
+                    "airportCode": "gig",
+                    "airport": "galeao intl.",
+                    "city": "rio de janeiro",
+                    "time": new Date(year,monthIndex, date,10,40)
+                },
+                "arrival": {
+                    "airportCode": "eze",
+                    "city": "buenos aires",
+                    "airport": "ministro pistarini intl.",
+                    "time": new Date(year,monthIndex, date,14,0)
+                },
+                "flight": "ar1261",
+                "date": new Date(year,monthIndex, date)
+            }
+        )
+    }
+
+    const ezemia = (year,monthIndex, date) =>{
+        return(
             {
                 "active": true,
-                "date": new Date(2023,2,27),
+                "date": new Date(year,monthIndex, date),
                 "flight": "ar1304",
                 "arrival": {
                     "airportCode": "mia",
                     "city" : "miami",
                     "airport": "miami intl.",
-                    "time": new Date(2023,1,27,14,40)
+                    "time": new Date(year,monthIndex, date,14,40)
                 },
                 "equipment": {
                     "manufacturer" : "airbus",
@@ -766,20 +529,25 @@ export default function Rosters () {
                     "airportCode": "eze",
                     "city" : "buenos aires",
                     "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,1,27,7,30)
+                    "time": new Date(year,monthIndex, date,7,30)
                 },
                 "duration": {
                     "minutes": 550
                 }
-            },
+            }
+        )
+    }
+
+    const miaeze = (year,monthIndex, date) =>{
+        return(
             {
-                "date": new Date(2023,2,28),
+                "date": new Date(year,monthIndex, date),
                 "departure": {
                     'fromHub': false,
                     "airportCode": "mia",
                     "city" : "miami",
                     "airport": "miami intl.",
-                    "time": new Date(2023,1,28,17,0)
+                    "time": new Date(year,monthIndex, date,17,0)
                 },
                 
                 "active": true,
@@ -787,7 +555,7 @@ export default function Rosters () {
                     "airportCode": "eze",
                     "city" : "buenos aires",
                     "airport": "ministro pistarini intl.",
-                    "time": new Date(2023,2,1,4,0)
+                    "time": new Date(year,monthIndex, date+1,4,0)
                 },
                 "flightActivity": true,
                 'international':true,
@@ -802,450 +570,133 @@ export default function Rosters () {
                     "model" : "330-300",
                     "img" : "/images/aircrafts/a330.jpeg"
                 }
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,29),
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,30),
-            },
-            {
-                "active": false,
-                "date": new Date(2023,2,31),
             }
+        )
+    }
+
+    const off = (year,monthIndex, date) =>{
+        return(
+            {
+                "active": false,
+                "date": new Date(year,monthIndex, date)
+            }
+        )
+    }
+
+    const recurrent = (year,monthIndex, date) =>{
+        return(
+            {
+                "duty": {
+                    "description": "recurrent",
+                    "ends": new Date(year,monthIndex, date,18,0),
+                    "starts": new Date(year,monthIndex, date,9,0)
+                },
+                "date": new Date(year,monthIndex, date),
+                "active": true,
+                "flightActivity": false
+            }
+        )
+    }
+
+    const actOne31 = (year,monthIndex) => {
+        return(
+         [
+            off(year,monthIndex, 1),
+            ezejfk(year,monthIndex,2),
+            off(year,monthIndex,3),
+            off(year,monthIndex,4),
+            jfkeze(year,monthIndex,5),
+            off(year,monthIndex,6),
+            off(year,monthIndex,7),
+            aepbrc(year,monthIndex,8),
+            brcaep(year,monthIndex,9),
+            off(year,monthIndex, 10),
+            off(year,monthIndex, 11),
+            aeplim(year,monthIndex,12),
+            limaep(year,monthIndex,13),
+            recurrent(year,monthIndex,14),
+            recurrent(year,monthIndex,15),
+            recurrent(year,monthIndex,16),
+            off(year,monthIndex, 17),
+            off(year,monthIndex, 18),
+            ezefco(year,monthIndex,19),
+            off(year,monthIndex, 20),
+            off(year,monthIndex, 21),
+            fcoeze(year,monthIndex,22),
+            off(year,monthIndex, 23),
+            off(year,monthIndex, 24),
+            ezemad(year,monthIndex,25),
+            off(year,monthIndex, 26),
+            off(year,monthIndex, 27),
+            madeze(year,monthIndex,28),
+            off(year,monthIndex, 29),
+            aepmdz(year,monthIndex, 30),
+            mdzaep(year,monthIndex, 31)
         ]
+
+        )
     }
 
-    const rosterThree = {
-        'data':{
-            "crewId": "0002",
-            "published": new Date(2023,1,1),
-            "activity": [
-                {
-                    "active": false,
-                    "date": new Date(2023,1,1)
-                },
-                {
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,2,22,40)
-                    },
-                    "arrival": {
-                        "airportCode": "fco",
-                        "city": "fco",
-                        "airport": "fiumicino intl.",
-                        "time": new Date(2023,1,3,17,0)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flight": "ar1140",
-                    'isOffered': false,
-                    "active": true,
-                    'flightId': uuidv4(),
-                    "flightActivity": true,
-                    'international':true,
-                    "date": new Date(2023,1,2),
-                    "duration": {
-                        "minutes": 880
-                    }
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,3)
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,4)
-                },
-                {
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "active": true,
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "fco",
-                        "city": "rome",
-                        "airport": "fiumincino intl.",
-                        "time": new Date(2023,1,5,18,15)
-                    },
-                    "arrival": {
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,6,4,40)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "duration": {
-                        "minutes": 865
-                    },
-                    "date": new Date(2023,1,5),
-                    "flight": "ar1141"
-                },
-                {
-                    "date": new Date(2023,1,6),
-                    "active": false
-                },
-                {
-                    "duration": {
-                        "minutes": 550
-                    },
-                    "flight": "ar1302",
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,7,23,30)
-                    },
-                    "arrival": {
-                        "airportCode": "mia",
-                        "airportName": "miami intl.",
-                        "city": "miami",
-                        "time": new Date(2023,1,8,6,40)
-                    },
-                    "active": true,
-                    "date": new Date(2023,1,7)
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,8)
-                },
-                {
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "active": true,
-                    "duration": {
-                        "minutes": 540
-                    },
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "mia",
-                        "airportName": "miami intl.",
-                        "city": "miami",
-                        "time": new Date(2023,1,9,17,0)
-                    },
-                    "arrival": {
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,10,4,0)
-                    },
-                    "flight": "ar1303",
-                    "date": new Date(2023,1,9)
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,10)
-                },
-                {
-                    "date": new Date(2023,1,11),
-                    "flight": "ar1668",
-                    "equipment": {
-                        "manufacturer" : "boeing",
-                        "model" : "737-800 max",
-                        "img" : "/images/aircrafts/b737m.jpeg"
-                    },
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "aep",
-                        "airportName": "aeroparque j.newbery.",
-                        "city": "buenos aires",
-                        "time": new Date(2023,1,11,13,20)
-                    },
-                    "arrival": {
-                        "airportCode": "brc",
-                        "city": "bariloche",
-                        "airport": "tte. Luis Candelaria intl.",
-                        "time": new Date(2023,1,11,15,45)
-                    },
-                    "flightActivity": true,
-                    'international':false,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "active": true,
-                    "duration": {
-                        "minutes": 145
-                    }
-                },
-                {
-                    "flightActivity": true,
-                    'international':false,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "date": new Date(2023,1,12),
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "brc",
-                        "city": "bariloche",
-                        "airport": "tte. Luis Candelaria intl.",
-                        "time": new Date(2023,1,12,17,10)
-                    },
-                    "arrival": {
-                        "airportCode": "aep",
-                        "airportName": "aeroparque j.newbery.",
-                        "city": "buenos aires",
-                        "time": new Date(2023,1,12,19,15)
-                    },
-                    "flight": "ar1669",
-                    "equipment": {
-                        "manufacturer" : "boeing",
-                        "model" : "737-800 max",
-                        "img" : "/images/aircrafts/b737m.jpeg"
-                    },
-                    "active": true,
-                    "duration": {
-                        "minutes": 125
-                    }
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,13),
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,14),
-                },
-                {
-                    "date": new Date(2023,1,15),
-                    "active": true,
-                    "arrival": {
-                        "airportCode": "fco",
-                        "city": "rome",
-                        "airport": "fiumicino intl.",
-                        "time": new Date(2023,1,16,17,0)
-                    },
-                    "duration": {
-                        "minutes": 800
-                    },
-                    "flight": "ar1140",
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,15,22,40)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,16)
-                },
-                {
-                    "date": new Date(2023,1,17),
-                    "active": false
-                },
-                {
-                    "flight": "ar1141",
-                    "date": new Date(2023,1,18),
-                    "arrival": {
-                        "airportCode": "eze",
-                        "city": "buenos aires",
-                        "airport": "ministro pistarini intl.",
-                        "time": new Date(2023,1,19,4,40)
-                    },
-                    "active": true,
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "fco",
-                        "city": "rome",
-                        "airport": "fiumicino intl.",
-                        "time": new Date(2023,1,18,18,15)
-                    },
-                    "equipment": {
-                        "manufacturer" : "airbus",
-                        "model" : "330-300",
-                        "img" : "/images/aircrafts/a330.jpeg"
-                    },
-                    "duration": {
-                        "minutes": 865
-                    }
-                },
-                {
-                    "date": new Date(2023,1,19),
-                    "active": false
-                },
-                {
-                    "duty": {
-                        "description": "recurrent",
-                        "ends": new Date(2023,1,20,18,0),
-                        "starts": new Date(2023,1,20,9,0)
-                    },
-                    "date": new Date(2023,1,20),
-                    "active": true,
-                    "flightActivity": false
-                },
-                {
-                    "duty": {
-                        "description": "recurrent",
-                        "ends": new Date(2023,1,21,18,0),
-                        "starts": new Date(2023,1,21,9,0)
-                    },
-                    "date": new Date(2023,1,21),
-                    "active": true,
-                    "flightActivity": false
-                },
-                {
-                    "duty": {
-                        "description": "recurrent",
-                        "ends": new Date(2023,1,22,18,0),
-                        "starts": new Date(2023,1,22,9,0)
-                    },
-                    "date": new Date(2023,1,22),
-                    "active": true,
-                    "flightActivity": false
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,23)
-                },
-                {
-                    "date": new Date(2023,1,24),
-                    "active": false
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,25),
-                },
-                {
-                    "active": false,
-                    "date": new Date(2023,1,26),
-                },
-                {
-                    "active": true,
-                    "date": new Date(2023,1,27),
-                    "flight": "ar1668",
-                    "arrival": {
-                        "airportCode": "brc",
-                        "city" : "bariloche",
-                        "airport": "tte. Luis Candelaria intl.",
-                        "time": new Date(2023,1,27,15,45)
-                    },
-                    "equipment": {
-                        "manufacturer" : "boeing",
-                        "model" : "737-800 max",
-                        "img" : "/images/aircrafts/b737m.jpeg"
-                    },
-                    "flightActivity": true,
-                    'international':false,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "departure": {
-                        'fromHub': true,
-                        "airportCode": "aep",
-                        "city" : "buenos aires",
-                        "airport": "aeroparque j. newbery",
-                        "time": new Date(2023,1,27,13,20)
-                    },
-                    "duration": {
-                        "minutes": 145
-                    }
-                },
-                {
-                    "date": new Date(2023,1,28),
-                    "departure": {
-                        'fromHub': false,
-                        "airportCode": "brc",
-                        "city" : "bariloche",
-                        "airport": "tte. Luis Candelaria intl.",
-                        "time": new Date(2023,1,28,17,10)
-                    },
-                    
-                    "active": true,
-                    "arrival": {
-                        "airportCode": "aep",
-                        "city" : "buenos aires",
-                        "airport": "aeroparque j.newbery",
-                        "time": new Date(2023,1,28,19,15)
-                    },
-                    "flightActivity": true,
-                    'international':true,
-                    'flightId': uuidv4(),
-                    'isOffered': false,
-                    "flight": "ar1669",
-                    "duration": {
-                        "minutes": 125
-                    },
-                    "equipment": {
-                        "manufacturer" : "boeing",
-                        "model" : "737-800 max",
-                        "img" : "/images/aircrafts/b737m.jpeg"
-                    }
+    const actTwo31 = (year,monthIndex) => {
+        return(
+         [
+            off(year,monthIndex, 1),
+            ezemad(year,monthIndex,2),
+            off(year,monthIndex,3),
+            off(year,monthIndex,4),
+            madeze(year,monthIndex,5),
+            off(year,monthIndex,6),
+            off(year,monthIndex,7),
+            ezemia(year,monthIndex,8),
+            off(year,monthIndex, 9),
+            miaeze(year,monthIndex,10),
+            off(year,monthIndex, 11),
+            off(year,monthIndex,12),
+            off(year,monthIndex,13),
+            recurrent(year,monthIndex,14),
+            recurrent(year,monthIndex,15),
+            recurrent(year,monthIndex,16),
+            off(year,monthIndex, 17),
+            off(year,monthIndex, 18),
+            ezefco(year,monthIndex,19),
+            off(year,monthIndex, 20),
+            off(year,monthIndex, 21),
+            fcoeze(year,monthIndex,22),
+            off(year,monthIndex, 23),
+            off(year,monthIndex, 24),
+            ezemad(year,monthIndex,25),
+            off(year,monthIndex, 26),
+            off(year,monthIndex, 27),
+            madeze(year,monthIndex,28),
+            off(year,monthIndex, 29),
+            ezegig(year,monthIndex, 30),
+            gigeze(year,monthIndex, 31)
+        ]
+
+        )
+    }
+
+    const rosterModel = (crewId, year,monthIndex, activity) =>{
+
+        return(
+            {
+                'data':{
+                    'crewId': crewId,
+                    'published': new Date(year,monthIndex, 1),
+                    'activity': activity
                 }
-            ]
-        }
+            }            
+        )
     }
 
-    
-    console.log(rosterTwo, rosterOne)
-
-    // const postRoster =() =>{
-
-    //     // const dbRef = collection()
-    //     setDoc(doc(db, 'rosters', '0001_02_23'),rosterOne)
-    //         .then(res=>console.log(res.data))
-    //         .catch(err=>console.log(err))
-    // }
     const postRoster =() =>{
         const dbRef = collection(db, 'rosters')
 
-        addDoc(dbRef,rosterThree)
+        addDoc(dbRef,rosterModel('0002',2023,2,actTwo31(2023,2)))
             .then(res=>console.log(res.id))
-            // .then(res=>{
-            //     console.log(res.data)
-            //     console.log(res.id)
-            // })
             .catch(err=>console.log(err))
-        // const dbRef = collection()
-        // setDoc(doc(db, 'rosters', '0001_02_23'),rosterOne)
     }
     return(
-        <>  <button onClick={postRoster}>Agregar Rol</button>
-                    {/* <input type='button'>Agregar Rol</input> */}
-
-            {/* <input type='button' onClick={postRoster}>Agregar Rol</input> */}
-        </>
+         <button onClick={postRoster}>Agregar Rol</button>
     )
 }

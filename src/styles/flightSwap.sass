@@ -14,10 +14,25 @@
     color: $darkblue
 
 .swap-main-container .main
-    height: 50%
-    // margin: 18px 20px
+    height: 88%
     padding: 18px 20px
     overflow: hidden
+
+.swap-main-container .bottom
+    height: auto
+    padding: 18px 20px
+    overflow: hidden
+
+.manage-requests-btn
+    background-color: $lightblue
+    color: white
+    opacity: 0.9
+
+.manage-requests-btn:hover
+    background-color: $lightblue
+    color: white
+    opacity: 1
+
 
 .swap-inner-container
     box-shadow: 0px 0px 20px 0px rgb(0, 0, 0,0.135)
@@ -35,6 +50,10 @@
     justify-content: center
     align-items: center
     height: auto
+    flex-direction: column
+
+.swap-middle-btn-container p 
+    margin-top: 10px
 
 .swap-middle-btn-div
     font-size: 1.5rem
@@ -48,16 +67,43 @@
 
 .swap-wid-title
     color: $lightblue
-    font-size: 1.4rem
-    opacity: 0.9
     width: 100%
-    height: 10%
+    height: 4.2rem
     position: sticky
     top: 0 
     background-color: white
-    // border: 1px solid red
-    margin-bottom: -3px
     z-index: 1
+
+.swap-wid-title p 
+    color: $darkgray
+    font-size: 1.2rem
+
+.question-sign
+    display: flex
+    height: 1.5rem 
+    width: 1.5rem 
+    justify-content: center
+    align-items: center
+    background-color: $yellow
+    border-radius: 50%
+    cursor: pointer
+
+.question-sign:hover
+    background-color: $hoveryellow
+
+.question-sign p 
+    color: white
+    font-size: 1.3rem
+
+.toggle-elegible :first-child
+    margin-right: 8px
+    font-size: 1rem
+    color: $darkgray
+    text-align: baseline
+
+.toggle-elegible :last-child
+    cursor: pointer
+
 
 .flight-offer-card-container
     height: 90%
@@ -66,31 +112,26 @@
     position: relative
     display: flex
     flex-direction: column
-    // justify-content: center
     align-items: center
-    padding: 5px 10px
+    padding: 10px
     z-index: 0
-    margin-top: 5%
 
 .flight-offer-card
     width: 100%
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.136)
     border-radius: 7px
     display: flex
-    margin-top: 12px
+    // margin-top: 14px
+    margin: 15px 0 
     justify-content: space-evenly
     align-items: center
-    padding: 10px
+    padding: 20px 0
     font-size: 0.9rem
 
 .flight-offer-card input
-    // margin-top: 15%
     border-radius: 50%
     height: 20px
     width: 20px
-
-
-
 
 .go-roster-btn
     background-color: $lightblue
@@ -103,6 +144,50 @@
 .go-roster-btn:hover
     background-color: $darkblue
     color: white
+
+.request-card
+    padding-left: 0
+    text-align: center
+
+.request-card.desired
+    font-style: italic
+    opacity: 0.9
+
+.request-card.border-div
+    border-right: 1px solid $bordergray
+
+.request-card h5 
+    color: $darkgray
+    margin:  0
+    opacity: 0.8
+    font-size: 1.2rem
+    font-style: normal
+
+.airport-div
+    margin: 15px 0 20px 0
+
+.airport-div p
+    font-size: 1.3rem
+    color: $darkblue
+
+
+.airport-div svg 
+    font-size: 1rem
+    margin: 0 10px
+    color: $lightblue
+
+.request-card button
+    width: 95%
+    // border: 1px solid $darkgray
+    border-radius: 7px
+    padding: 3px 0
+    font-size: 0.9rem
+    opacity: 0.86
+    // background-color: white
+    // padding: 3px 5px
+
+.request-card.options
+    height: 70%
 
 
 

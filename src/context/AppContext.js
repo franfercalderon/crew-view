@@ -58,10 +58,10 @@ const AppProvider = ({children}) => {
                 .then((querySnapshot)=>{
 
                     querySnapshot.forEach(doc=>{
+
                         //Checks if published date matches current month, sets state with current Roster
-                        console.log(doc.data())
                         if(doc.data().data.published.seconds === publishedDate){
-                            console.log(doc.id)
+                           
                             setCurrentRoster({
                                 id: doc.id,
                                 data: doc.data().data
@@ -80,7 +80,7 @@ const AppProvider = ({children}) => {
 
             //If flight matches any of the offeredFlights, sets isOffered to opposite boolean
             if (flight.flightId === offeredFlight.outboundFlight.flightId ||offeredFlight.inboundFlight.flightId === flight.flightId){
-                console.log(flight)
+                
                 return{
                     ...flight,
                     isOffered: !flight.isOffered
@@ -97,11 +97,12 @@ const AppProvider = ({children}) => {
 
         //Reference to user's Roster:
         const userRosterRef = doc(db, "rosters", currentRoster.id)
+        
         //Updates in db
         updateDoc(userRosterRef,updatedRoster)
             //If succeeds, sets new state
             .then(()=>setCurrentRoster(updatedRoster))
-            .catch((err)=>console.log(err.message))
+            .catch((err)=>console.error(err.message))
     }
 
 

@@ -1,15 +1,11 @@
 import { AppContext } from "../../context/AppContext"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 
 
 export default function FlightOfferCard ({offer, handleSelect}) {
 
     //CONTEXT
-    const {addZero} = useContext(AppContext)
-
-    //STATES
-    // const [selectedOffers, setSelectedOffers] = useState([])
-    console.log(offer)
+    const {addZero, globalUser} = useContext(AppContext)
 
     //Creates date for inbound/outbound flights
     const outboundDate = new Date(offer.outboundFlight.departure.time.seconds*1000)
@@ -31,27 +27,8 @@ export default function FlightOfferCard ({offer, handleSelect}) {
         minutes:addZero(inboundDate.getMinutes())
     }
 
-    // const handleSelect = (e) =>{
-    //     // let selectedOffers = []
-    //     if(e.target.checked){
-    //         setSelectedOffers(...selectedOffers,e.target.value)
-    //     }
-    // }
-
-    // useEffect(()=>{
-
-    //     if(selectedOffers.length === 2){
-    //         selectedOffers.map((offer)=>{
-    //             return(console.log(offer.outboundFlight.departure.airportCode))
-    //         })
-    //     }
-
-
-    // },[selectedOffers])
-
-
-
     return(
+
         <div className='flight-offer-card'>
             <div className='d-flex flex-column align-items-center'>
                 <p>Outbound</p>
@@ -67,7 +44,11 @@ export default function FlightOfferCard ({offer, handleSelect}) {
                 <p><i>{inbound.hour+':'+inbound.minutes}</i></p>
             </div>
             <div className='d-flex flex-column'>
-                <input type='checkbox' name="flightOffer" onChange={handleSelect} value={JSON.stringify(offer)}/>
+                {offer.crewId === globalUser.employeeId ?
+                <input type='radio' className="flight-offer-radio" name="myFlightOffer" onChange={handleSelect} value={JSON.stringify(offer)}/>
+                :
+                <input type='radio' className="flight-offer-radio" name="flightOffer" onChange={handleSelect} value={JSON.stringify(offer)}/>
+                }
             </div>
         </div>
     )
