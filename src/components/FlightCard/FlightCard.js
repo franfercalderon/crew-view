@@ -180,7 +180,8 @@ export default function FlightCard ({day, currentSeconds}){
         {isLoading?
             <Loader/>
         :
-        <div className="flight-card-main-container row">
+        <div className={day.active && day.flightActivity ? 'flight-card-main-container row clickable':'flight-card-main-container row'}>
+        {/* // <div className="flight-card-main-container row{}"> */}
             <p className="col-2 d-flex justify-content-center align-items-center">{addZero(dayDate.getMonth()+1)}-{addZero(dayDate.getDate())}-{dayDate.getFullYear()}</p>
             <p className="col-2 d-flex justify-content-center align-items-center">
                 {!day.active ?

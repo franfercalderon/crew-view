@@ -2,8 +2,9 @@ import { AppContext } from "../../context/AppContext"
 import { useContext, useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faRightLeft} from "@fortawesome/free-solid-svg-icons"
+import Swal from 'sweetalert2'
 
-export default function SwapCard ({request, handleApprove}) {
+export default function SwapCard ({request, handleApprove, deleteSwapRequest, setIsLoading, getAllRequests}) {
 
     //CONTEXT
     const {addZero, globalUser} = useContext(AppContext)
@@ -81,6 +82,33 @@ export default function SwapCard ({request, handleApprove}) {
         }
     }
 
+    const handleDelete = (id)=>{
+        Swal
+        .fire({
+            text: `Are you sure you want to cancel this request?`,
+            icon: 'warning',
+            confirmButtonText: 'Delete',
+            showDenyButton: true,
+            denyButtonText:'No',
+            buttonsStyling: false,
+            customClass:{
+                confirmButton: 'btn btn-primary alert-btn order-2',
+                denyButton: 'btn btn-light alert-btn order-1',
+                popup: 'alert-container'
+            }
+        })
+        .then(async (res)=>{
+            if(res.isConfirmed){    
+                    setIsLoading(true)
+                    //Deletes request by id
+                    await deleteSwapRequest(id)
+                    //Updates requests
+                    await getAllRequests()
+                    setIsLoading(false)
+                }
+            })
+    }
+
     useEffect(()=>{
 
         //Assign state that will be used to show user and other crew flight details
@@ -154,7 +182,7 @@ export default function SwapCard ({request, handleApprove}) {
                 :
                     <button  className='btn btn-primary' onClick={()=>handleApprove(request)}>Approve</button>
                 }
-                <button className='btn btn-danger'>Cancel</button>
+                <button className='btn btn-danger' onClick={()=>handleDelete(request.requestId)}>Cancel</button>
             </div>
         </div>
         

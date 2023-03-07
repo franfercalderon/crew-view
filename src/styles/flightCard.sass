@@ -4,13 +4,17 @@
     margin: 0
     border-bottom: 1px solid $bordergray 
     color: $darkblue
-    cursor: pointer
     background-color: white
 
-.flight-card-main-container:hover
+.flight-card-main-container.clickable
+    cursor: pointer
+
+.flight-card-main-container.clickable:hover
     background-color: $lighterblue
     font-weight: 500
     transition: background-color 0.2s linear
+
+// .flight-card-main-container:hover
 
 .swap-btn-list
     height: 30px

@@ -571,7 +571,7 @@ export default function SwapContainer () {
                             {
                                 myRequests.map((request,idx)=>{
                                     return (
-                                        <SwapCard request={request} handleApprove={handleApprove} key={idx} />
+                                        <SwapCard request={request} deleteSwapRequest={deleteSwapRequest} handleApprove={handleApprove} key={idx} setIsLoading={setIsLoading} getAllRequests={getAllRequests}/>
                                     )
                                 })
                             }
