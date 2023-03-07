@@ -692,7 +692,7 @@ export default function Rosters () {
     const postRoster =() =>{
         const dbRef = collection(db, 'rosters')
 
-        addDoc(dbRef,rosterModel('0002',2023,2,actTwo31(2023,2)))
+        addDoc(dbRef,rosterModel('0001',2023,2,actOne31(2023,2)))
             .then(res=>console.log(res.id))
             .catch(err=>console.log(err))
     }

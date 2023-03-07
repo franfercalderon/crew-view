@@ -1,7 +1,7 @@
 import { createContext, useState , useEffect, useCallback} from "react";
 import app from "../fb";
 import { getFirestore } from "firebase/firestore";
-import {getDoc, doc, collection, query, where, getDocs,updateDoc,FieldPath} from 'firebase/firestore'
+import {getDoc, doc, collection, query,deleteDoc, where, getDocs,updateDoc,FieldPath} from 'firebase/firestore'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const AppContext = createContext()
@@ -19,6 +19,7 @@ const AppProvider = ({children}) => {
     //STATES
     const [globalUser, setGlobalUser] = useState(null)
     const [currentRoster, setCurrentRoster] = useState(null)
+    const [myRequests, setMyRequests] = useState([])
 
     //FUNCTIONS
 
@@ -41,6 +42,8 @@ const AppProvider = ({children}) => {
                 .join(' ')
         )
     }
+
+
 
     //This will me a memoized function that will be recreated when globalUser (in dependency array) changes. This function gets all rosters for user stored in globalUser
     const getUserRosters = useCallback(() =>{
@@ -72,6 +75,42 @@ const AppProvider = ({children}) => {
                 .catch((err)=>{console.error(err.message)})
 
     },[globalUser])
+
+    //Gets all swap requests
+    const getAllRequests = useCallback(() =>{
+
+        //Creates empty array for offers
+        let myRequestArray = []
+
+        //Gets all offers that have
+        getDocs(collection(db,'swapRequests'))
+            .then(snap=>{
+                snap.forEach(doc=>{
+
+                    //First, checks if offers are current, if any of the flights have departed, it deletes requests from db. This way, user can only see current requests.
+                    if(doc.data().requester.outboundFlight.departure.time.seconds && doc.data().receptor.outboundFlight.departure.time.seconds > Math.round(Date.now()/1000)){
+
+                        if( doc.data().receptor.crewId || doc.data().requester.crewId === globalUser.employeeId){
+                            myRequestArray.push(doc.data())
+                        }
+                    }
+                    else{
+                        deleteDoc(doc.ref)
+                    }
+                })
+            })
+            .then(()=> {
+                //Orders Requests by departure date
+                myRequestArray = myRequestArray.sort((a,b)=>{
+                    return(
+                        a.requester.outboundFlight.departure.time.seconds - b.requester.outboundFlight.departure.time.seconds
+                    )
+                })
+                setMyRequests(myRequestArray)
+            })
+            .catch((err)=>console.log(err.message))
+
+},[globalUser])
 
     //Update flightOffered Status in roster
     const updateIsOffrededInRoster = (offeredFlight) =>{
@@ -159,9 +198,12 @@ const AppProvider = ({children}) => {
         <Provider value={{
             globalUser,
             currentRoster,
+            myRequests,
             addZero,
             capitalizeWords,
-            updateIsOffrededInRoster               
+            updateIsOffrededInRoster,
+            getUserRosters,
+            getAllRequests          
         }}>
             {children}
         </Provider>

@@ -5,7 +5,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import NextFlight from "../Widgets/NextFlight"
 import GroundActivity from "../Widgets/GroundActivity"
 import TotalHours from '../Widgets/TotalHours'
-import Rosters from "../../assets/rosters/rosters"
+import SwapRequests from "../Widgets/SwapRequests"
 import Forecast from "../Widgets/Forecast"
 
 export default function Dashboard () {
@@ -85,16 +85,9 @@ export default function Dashboard () {
                     </div>
                     <div className="widget-main-container row">
                         <GroundActivity roster={currentRoster.data.activity}/>
-
                         <TotalHours roster={currentRoster.data.activity}/>
-                    
-                        <div className="widget-container col-4">
-                            <div className="widget-border">
-                                <h3>Trolito</h3>
-                                <Rosters/>
-
-                            </div>
-                        </div>
+                        <SwapRequests/>
+    
                     </div>
                     </>
                 }

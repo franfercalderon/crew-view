@@ -24,22 +24,13 @@ export default function SideBar () {
                         </div>
                     </NavLink>
                 </ul>
-                <ul>
-                    
-                    {/* <NavLink to='/swap'>
-                            <FontAwesomeIcon icon={faArrowsRotate}/>
-                            <p className="m-0">Flight Swap</p>
-                    </NavLink> */}
-
-
+                <ul>     
                     <NavLink to='/swap'>
                         <div className="nav-link-div d-flex align-items-center">
                             <FontAwesomeIcon icon={faArrowsRotate}/>
                             <p className="m-0">Flight Swap</p>
                         </div>
                     </NavLink>
-
-                    
                 </ul>
                 <ul>
                     <NavLink to='/airborne'>
@@ -58,8 +49,6 @@ export default function SideBar () {
                     </NavLink>
                 </ul>
             </nav>
-            {/* <span className="nav-ball ball-1"></span>
-            <span className="nav-ball ball-2"></span> */}
         </div>
         </>
     )

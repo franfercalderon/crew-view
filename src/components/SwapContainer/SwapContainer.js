@@ -5,11 +5,12 @@ import WidgetLoader from '../WidgetLoader/WidgetLoader'
 import FlightOfferCard from '../FlightOfferCard/FlightOfferCard'
 import SwapCard from '../SwapCard/SwapCard'
 import { getFirestore, collection, getDocs, deleteDoc, addDoc, doc, updateDoc, getDoc} from 'firebase/firestore'
-import { useEffect, useState , useContext, useCallback} from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState , useContext} from 'react'
+import { Link , useNavigate} from 'react-router-dom'
 import { AppContext } from '../../context/AppContext'
 import { MDBSwitch } from 'mdb-react-ui-kit'
 import Swal from 'sweetalert2'
+import {v4 as uuidv4} from 'uuid'
 
 //Initialize firestore
 const db = getFirestore(app)
@@ -17,7 +18,10 @@ const db = getFirestore(app)
 export default function SwapContainer () {
     
     //CONTEXT
-    const {globalUser, currentRoster} = useContext(AppContext)
+    const {globalUser, currentRoster,getUserRosters, getAllRequests, myRequests} = useContext(AppContext)
+
+    //ROUTER
+    const navigate = useNavigate()
     
     //STATES
     const [isLoading, setIsLoading] = useState(true)
@@ -28,10 +32,9 @@ export default function SwapContainer () {
     const [elegibleOffers, setElegibleOffers] = useState(null)
     const [elegibilityFilter, setElegibilityFilter] = useState(true)
     const [showManage, setShowManage] = useState(false)
-    const [myRequests, setMyRequests] = useState(null)
+    // const [myRequests, setMyRequests] = useState([])
 
     //FUNCTIONS
-    
     const handleSelect = (e) =>{
 
         //Gets offer from flight card
@@ -107,7 +110,34 @@ export default function SwapContainer () {
             })
         .then((res)=>{
             if(res.isConfirmed){
-                postSwapRequest(selectedOffers)
+
+                //Checks if flight dates matches. For a flight to be elegible, dates of receptor's flights must be the same as the requester's.
+                const reqOutbound = selectedOffers.requester.outboundFlight.date.seconds
+                const reqInbound = selectedOffers.requester.inboundFlight.date.seconds
+                const recOutbound = selectedOffers.receptor.outboundFlight.date.seconds
+                const recInbound = selectedOffers.receptor.inboundFlight.date.seconds
+
+                if(reqOutbound === recOutbound && reqInbound === recInbound){
+                    //Calls fn that posts the swapRequest in db
+                    postSwapRequest({...selectedOffers,'requestId':uuidv4()})
+                }
+                else{
+                    return(
+                        Swal
+                        .fire({
+                            title: 'Oops!',
+                            text: 'The selected flights are not elegible for a swap. Please select flights that where departure and return flight dates match.',
+                            icon: 'warning',
+                            confirmButtonText: 'Ok',
+                            buttonsStyling: false,
+                            customClass:{
+                                confirmButton: 'btn btn-primary alert-btn order-2',
+                                popup: 'alert-container'
+                            }
+                        })
+
+                    )
+                }
             }
         })
     }
@@ -153,68 +183,183 @@ export default function SwapContainer () {
             .catch(err=>console.error(err.message))
     }
 
-    //Handles flight activity changes in both requester and receptor rosters, then calls funciton that actually updates the document in db
-    const updateRoster = (current, request) =>{
+    const deleteFlightOffer = async (request) => {
+        try{
+            //Gets all docs from flightOffers collection in db 
+            const querySnap = await getDocs(collection(db, 'flightOffers'))
+            querySnap.forEach(doc=>{
+                const docId = doc.data().outboundFlight.flightId
+                const reqOutboundId = request.requester.outboundFlight.flightId
+                const recOutboundId = request.receptor.outboundFlight.flightId
+                // console.log('docId '+docId)
+                //if flight match any of the contained in offers (compares flightId), deletes it
+                if( docId === recOutboundId ||
+                    docId === reqOutboundId){
+                    // console.log('entra ahora')
+                    // console.log('requester Id es '+request.requester.outboundFlight.flightId)
+                    // console.log('receptor Id es '+request.receptor.outboundFlight.flightId)
+                    // // console.log(doc.data())
+                    deleteDoc(doc.ref)
+                }
+                
+            })
 
-        //UPDATES REQUESTER'S ROSTER
-        //Maps over requester's current roster and finds date match to know what flights to replace with newFlights inbound and outbound
-        const requesterUpdatedActivity = current.data.activity.map(day=>{
-            
-            if(day.date.seconds === request.receptor.outboundFlight.date.seconds){
-                return request.receptor.outboundFlight
-            }
-            
-            else if(day.date.seconds === request.receptor.inboundFlight.date.seconds){
-                return request.receptor.inboundFlight
-            }
-            //If date does not match any new flight, returns the day's activity as it was.
-            return day
-            
-        })
-
-        //Finally, calls function to update in db
-        updateRosterInDb(current.id, requesterUpdatedActivity)
-
-
-        //UPDATES RECEPTOR'S (CURRENT USER) ROSTER
-        //Maps over currentRoster and replaces flights with requester's
-        const receptorUpdatedActivity = currentRoster.data.activity.map(day=>{
-
-            if(day.date.seconds === request.requester.outboundFlight.date.seconds){
-                return request.requester.outboundFlight
-            }
-            else if(day.date.seconds === request.requester.inboundFlight.date.seconds){
-                return request.requester.inboundFlight
-            }
-            //If date does not match any new flight, returns the day's activity as it was.
-            return day
-        })
-
-        //Calls function to update in db
-        updateRosterInDb(currentRoster.id, receptorUpdatedActivity)
-
+        }
+        catch(err){console.log(err.message)}
     }
 
-    const updateRosterInDb = (rosterId, newActivity ) =>{
-        //Creates reference to docuemnt in rosters collection, using roster ID
-        const rosterRef = doc(db, 'rosters', rosterId)
-        updateDoc(rosterRef, {'data.activity': newActivity})
-            .then(()=>console.log('rosterupdated'))
-            .catch((err)=>console.log(err.message))
-    }   
+    const deleteSwapRequest = async (requestId) => {
 
-    const handleApprove = (request) =>{
-
-        //Gets current roster from requester user to edit and update it
-        getDoc(doc(db, 'rosters', request.requester.rosterId))
-            .then((doc)=>{
-                if(doc.exists()){
-
-                    //Calls function thast actually updates the requesters roster
-                    updateRoster(doc.data(), request)
+        //Gets all requests and looks for the matching id
+        try{
+            const querySnap = await getDocs(collection(db, 'swapRequests'))
+            querySnap.forEach(doc=>{
+                if(doc.data().requestId === requestId){
+                    deleteDoc(doc.ref)
                 }
             })
-            .catch(err=>console.log(err.message))
+
+        }
+        catch(err){console.log(err.message)}
+    }
+
+
+    const updateActivity = (currentActivity, newFlights) =>{
+  
+        //Maps over current activity, looking for dates coincidences with new activity flights:
+        return(
+            currentActivity.map(day => {
+                if(day.date.seconds === newFlights.outboundFlight.date.seconds){
+                    return newFlights.outboundFlight
+                }
+                else if(day.date.seconds === newFlights.inboundFlight.date.seconds){
+                    return newFlights.inboundFlight
+                }
+                //If date does not match any new flight, returns the day's activity as it was.
+                return day
+            })
+        )
+    }
+
+    const updateRosterInDb = async (rosterId, newActivity ) =>{
+
+        try{
+            //Creates reference to docuemnt in rosters collection, using roster ID
+            const rosterRef = doc(db, 'rosters', rosterId)
+            
+            //Repalces activity with new data
+            await updateDoc(rosterRef, {'data.activity': newActivity})
+        }
+        catch(err){
+            console.log(err.message)
+        }
+
+    } 
+    
+    const handleApprove = async (request) =>{
+
+        Swal
+        .fire({
+            text: `Do you want to approve this swap?`,
+            icon: 'info',
+            iconColor: '#FFC106',
+            confirmButtonText: 'Approve',
+            showDenyButton: true,
+            denyButtonText:'Not now',
+            buttonsStyling: false,
+            customClass:{
+                confirmButton: 'btn btn-primary alert-btn order-2',
+                denyButton: 'btn btn-light alert-btn order-1',
+                popup: 'alert-container'
+            }
+        })
+        .then((res)=>{
+            if(res.isConfirmed){
+                //If a confirmation is received, calls function that handles the swap
+                approveSwap(request)
+            }
+        })
+        
+        
+        
+    }
+    
+    const approveSwap = async (request)=>{
+
+        //Turns loader on
+        setIsLoading(true)
+
+        try{
+            //Gets current roster from requester user to edit and update it    
+            const docSnap = await getDoc(doc(db, 'rosters', request.requester.rosterId))
+            if(docSnap.exists()){
+    
+                //Calls function that returns updated activity for both rosters
+                const requesterNewActivity = updateActivity(docSnap.data().data.activity, request.receptor)
+                const receptorNewActivity = updateActivity(currentRoster.data.activity, request.requester)
+                
+                //Sends changes to rosters in db
+                await updateRosterInDb(currentRoster.id, receptorNewActivity)
+                await updateRosterInDb(request.requester.rosterId, requesterNewActivity)
+    
+                //Once rosters have been updated, deletes swap request
+                await deleteSwapRequest(request.requestId)
+    
+                //Once request have been deleted, deletes flight offers from offer board
+                await deleteFlightOffer(request)
+                
+                //Updates users' roster and open requests
+                getAllRequests()
+                getUserRosters()
+                
+                //Sets loder to false
+                setIsLoading(false)
+                
+                //Returns success message
+                return(
+                    Swal
+                    .fire({
+                        title: 'Flight Swap approved!',
+                        text: `You will see your new activity reflected in your roster`,
+                        icon: 'success',
+                        confirmButtonText: 'Go to Roster',
+                        showDenyButton: true,
+                        denyButtonText:'Ok',
+                        buttonsStyling: false,
+                        customClass:{
+                            confirmButton: 'btn btn-primary alert-btn order-2',
+                            denyButton: 'btn btn-light alert-btn order-1',
+                            popup: 'alert-container'
+                        }
+                    })
+                    .then((res)=>{
+                        if(res.isConfirmed){
+                            //Shows manage Requests section
+                            navigate('/roster')
+                        }
+                    })
+                )
+    
+            }
+        }
+        catch(err){
+            setIsLoading(false)
+            return(
+                Swal
+                .fire({
+                    title: 'Oops!',
+                    text: 'We could not approve this request now. Please try again later.',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok',
+                    buttonsStyling: false,
+                    customClass:{
+                        confirmButton: 'btn btn-primary alert-btn order-2',
+                        popup: 'alert-container'
+                    }
+                })
+            )
+        }
+
     }
 
     //EFFECTS
@@ -223,43 +368,8 @@ export default function SwapContainer () {
         //Enables button when own flight and other flight are selected
         selectedOffers.requester && selectedOffers.receptor ?
         setBtnDisabled(false) : setBtnDisabled(true)
-    },[selectedOffers])
 
-    const getAllRequests = useCallback(() =>{
-
-            //Creates empty array for offers
-            let myRequestArray = []
-    
-            //Gets all offers that have
-            getDocs(collection(db,'swapRequests'))
-                .then(snap=>{
-                    snap.forEach(doc=>{
-    
-                        //First, checks if offers are current, if any of the flights have departed, it deletes requests from db. This way, user can only see current requests.
-                        if(doc.data().requester.outboundFlight.departure.time.seconds && doc.data().receptor.outboundFlight.departure.time.seconds > Math.round(Date.now()/1000)){
-
-                            if( doc.data().receptor.crewId || doc.data().requester.crewId === globalUser.employeeId){
-                                myRequestArray.push(doc.data())
-                            }
-                        }
-                        else{
-                            deleteDoc(doc.ref)
-                        }
-                    })
-                })
-                .then(()=> {
-                    //Orders Requests by departure date
-                    myRequestArray = myRequestArray.sort((a,b)=>{
-                        return(
-                            a.requester.outboundFlight.departure.time.seconds - b.requester.outboundFlight.departure.time.seconds
-                        )
-                    })
-                    setMyRequests(myRequestArray)
-                })
-                .catch((err)=>console.log(err.message))
-    
-    },[globalUser])
-    
+    },[selectedOffers]) 
 
     useEffect(()=>{
         
@@ -456,10 +566,7 @@ export default function SwapContainer () {
                     </div>
                     <div className='flight-offer-card-container'>
                         <>
-                            {!myRequests?
-                                //If user have no requests
-                                <p className='mt-6'>There are no offered flights</p>
-                            :
+                            {myRequests.length > 0?
                             <>
                             {
                                 myRequests.map((request,idx)=>{
@@ -469,6 +576,9 @@ export default function SwapContainer () {
                                 })
                             }
                             </>
+                            :
+                            //If user have no requests
+                            <p className='mt-6'>You have no open requests</p>
                             }
                         </>
                     </div>
