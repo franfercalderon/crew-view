@@ -458,7 +458,7 @@ export default function SwapContainer () {
 
     return(
         <div className="swap-main-container col-10">
-            <h2>Flight swap</h2>
+            <h2>Flight Swap</h2>
             <div className="main d-flex row ">
                 <>
                 {!showManage ?
@@ -541,7 +541,7 @@ export default function SwapContainer () {
                             }                  
                             </>
                         :                       
-                            <p className='mt-6'>There are no offered flights</p>
+                            <p className='mt-4'>There are no offered flights</p>
                         }
                         </div>
                     }
