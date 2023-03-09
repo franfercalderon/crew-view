@@ -1,28 +1,26 @@
-import SideBar from "../../components/SideBar/SideBar"
-import Nav from "../../components/Nav/Nav"
-import AirborneContainer from "../../components/AirborneContainer/AirborneContainer"
-import { AppContext } from "../../context/AppContext"
 import { useContext } from "react"
+import BuilderContainer from "../../components/BuilderContainer/BuilderContainer"
+import Nav from "../../components/Nav/Nav"
+import SideBar from "../../components/SideBar/SideBar"
+import { AppContext } from "../../context/AppContext"
 import Login from "../Login/Login"
 
-export default function Airborne (){
+export default function RosterBuilder (){
 
     //CONTEXT
     const {globalUser} = useContext(AppContext)
 
     return(
-
         <>  
-            {globalUser?
+            {globalUser ?
                 <>
                 <SideBar/>
                 <Nav/>
-                <AirborneContainer/>
+                <BuilderContainer/>
                 </>
                 :
                 <Login/>
             }
         </>
-    
     )
 }

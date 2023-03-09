@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { AppProvider } from './context/AppContext';
 import FlightSwap from './views/FlightSwap/FlightSwap';
 import Airborne from './views/Airborne/Airborne';
+import RosterBuilder from './views/RosterBuilder/RosterBuilder';
 
 
 
@@ -18,6 +19,7 @@ function App() {
           <Route exact path='/roster' element={<Roster/>}/>
           <Route exact path='/swap' element={<FlightSwap/>}/>
           <Route exact path='/airborne' element={<Airborne/>}/>
+          <Route exact path='/rosterbuilder' element={<RosterBuilder/>}/>
         </Routes>
       </AppProvider>
     </BrowserRouter>

@@ -41,10 +41,10 @@ export default function SideBar () {
                     </NavLink>
                 </ul>
                 <ul>
-                    <NavLink to='/inbox'>
+                    <NavLink to='/rosterbuilder'>
                         <div className="nav-link-div d-flex align-items-center">
                             <FontAwesomeIcon icon={faEnvelope}/>
-                            <p className="m-0">Messages</p>
+                            <p className="m-0">Roster Builder</p>
                         </div>
                     </NavLink>
                 </ul>
