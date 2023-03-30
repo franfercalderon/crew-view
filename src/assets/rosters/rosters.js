@@ -688,6 +688,101 @@ export default function Rosters () {
             }            
         )
     }
+    /////
+    
+// const a330200 = ()=>{
+//     return(
+//         {
+//             'manufacturer': 'airbus',
+//             'model': '330',
+//             'series': '200'
+//         }
+//     )
+// }
+// const a330300 = ()=>{
+//     return(
+//         {
+//             'manufacturer': 'airbus',
+//             'model': '330',
+//             'series': '300'
+//         }
+//     )
+// }
+// const b737 = ()=>{
+//     return(
+//         {
+//             'manufacturer': 'boeing',
+//             'model': '737',
+//             'series': '700'
+//         }
+//     )
+// }
+// const b738 = ()=>{
+//     return(
+//         {
+//             'manufacturer': 'boeing',
+//             'model': '737',
+//             'series': '800'
+//         }
+//     )
+// }
+// const b738m = ()=>{
+//     return(
+//         {
+//             'manufacturer': 'boeing',
+//             'model': '737',
+//             'series': '800 max'
+//         }
+//     )
+// }
+
+    
+
+        // {avion:'nuevo'},
+        // {avion: 'viejo'}
+        const planes = {
+            data:[
+                {
+                    'manufacturer': 'embraer',
+                    'model': '190',
+                    'series': 'ar'
+                },
+                {
+                    'manufacturer': 'boeing',
+                    'model': '737',
+                    'series': '800 max'
+                },
+                {
+                    'manufacturer': 'boeing',
+                    'model': '737',
+                    'series': '800'
+                },
+                {
+                    'manufacturer': 'boeing',
+                    'model': '737',
+                    'series': '700'
+                },
+                {
+                    'manufacturer': 'airbus',
+                    'model': '330',
+                    'series': '200'
+                }
+            ]
+        }
+    
+    
+
+    
+
+    const postPlanes =() =>{
+        const dbRef = collection(db, 'aircrafts')
+
+       addDoc(dbRef, planes)
+
+        // addDoc(dbRef,rosterModel('0001',2023,2,actOne31(2023,2)))
+        //     .then(res=>console.log(res.id))
+        //     .catch(err=>console.log(err))
+    }
 
     const postRoster =() =>{
         const dbRef = collection(db, 'rosters')
@@ -696,7 +791,11 @@ export default function Rosters () {
             .then(res=>console.log(res.id))
             .catch(err=>console.log(err))
     }
+
     return(
+        <>
          <button onClick={postRoster}>Agregar Rol</button>
+         <button onClick={postPlanes}>Agregar Aviones</button>
+        </>
     )
 }

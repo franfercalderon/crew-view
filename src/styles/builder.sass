@@ -1,0 +1,194 @@
+.builder-container-main
+    position: absolute
+    top: 0
+    right: 0
+    height: 100vh
+    display: flex
+    padding: 27px
+    flex-direction: column
+    background-color: $lightbackground
+
+.builder-container-main h2 
+    font-size: 1.9rem
+    margin: 3px 0 15px 8px 
+    color: $darkblue
+
+.builder-container-main .main
+    width: 99%
+    margin: 18px 8px
+    box-shadow: 0px 0px 20px 0px rgb(0, 0, 0,0.135)
+    border-radius: 8px
+    background-color: white
+    position: relative
+    height: 100%
+    max-height: 100%
+    overflow: scroll
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 30px
+
+.builder-activity-main-div
+    position: absolute
+    top: 0
+    height: 100%
+    width: 100vw
+    background-color: blue
+
+.builder-setup-div
+    height: 88%
+    width: 100%
+    display: flex
+    box-shadow: 0px 0px 20px 0px rgb(0, 0, 0,0.135)
+    border-top-left-radius: 8px
+    border-top-right-radius: 8px
+    padding: 10px 0
+    z-index: 1
+    background-color: $lightbackground
+
+
+.builder-setup-div .options
+    height: 100%
+    display: flex
+    flex-direction: column
+    padding: 20px 25px
+    align-items: center
+
+.builder-setup-div .options h5 
+    height: 8%
+    align-self: flex-start
+    color: $lightblue
+
+.builder-setup-div .body
+    height: 88%
+    width: 100%
+    padding: 15px 0
+
+.search-employee-input
+    height: 2.1rem
+    width: 100%
+    outline: none
+    padding: 0 10px
+    border-top-left-radius: 5px
+    border-top-right-radius: 5px
+    border: 1px solid $middlegray
+    border-bottom: none
+
+.employee-list-container
+    border: 1px solid $middlegray 
+    height: 90%
+    border-bottom-left-radius: 5px
+    border-bottom-right-radius: 5px
+    overflow: scroll
+    background-color: white
+
+.employee-list-container ul 
+    padding: 5px 10px
+
+.employee-list-container li 
+    list-style: none
+    padding: 5px 
+    border-bottom: 1px solid $bordergray
+    color: $darkgray
+
+.employee-list-container li:hover 
+    color: black
+    cursor: pointer
+    background-color: $lightbackground
+
+.margined
+    border-right: 1px solid $bordergray
+
+.builder-selected-div
+    height: 12%
+    width: 100%
+    border-bottom-left-radius: 8px
+    border-bottom-right-radius: 8px
+    box-shadow: 0px 0px 20px 0px rgb(0, 0, 0,0.135)
+    z-index: 0
+    display: flex
+    padding: 0
+    background-color: $lightbackground
+ 
+.builder-selected-div :first-child
+    border-bottom-left-radius: 8px
+
+.builder-selected-div .options
+    height: 100%
+    width: 34%
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 1rem
+    transition: background-color 0.2s ease
+    
+.options.arrow
+    clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%)
+    width: 36%
+
+.options.active
+    background-color: $darkgray
+    color: white
+
+.options.last
+    border-bottom-right-radius: 8px
+
+.options.complete
+    background-color: $darkblue
+    z-index: 1
+    color: white
+    // opacity: 0.9
+
+.clear-selection-btn
+    height: 1.1rem
+    width: 1.1rem
+    border-radius: 50%
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 0.8rem
+    color: $darkgray
+    border: none
+    margin-left: 10px
+    background-color: $lightbackground 
+
+.clear-selection-btn:hover 
+    background-color: white
+    color: black
+
+.options.second
+    margin-left: -2%
+
+.select-input-div
+    margin-bottom: 20px
+
+.select-input-div:hover
+    border: none
+
+.styled__control-is-focused
+    box-shadow: none
+
+.date-select-input:disabled
+    cursor: default
+
+.aircraft-list-div
+    height: 100%
+    width: 100%
+    background-color: white
+    border: 1px solid $middlegray
+    border-radius: 5px
+    padding: 10px 20px
+    color: $darkgray
+    overflow: scroll
+
+.aircraft-list-div ul 
+    padding: 0
+
+.aircraft-list-div input
+    height: 1rem
+    width: 1rem
+    margin: 5px 10px 5px 0
+    cursor: pointer
+
+.aircraft-list-div input:disabled
+    cursor: default
