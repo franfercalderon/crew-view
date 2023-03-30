@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import WidgetLoader from "../WidgetLoader/WidgetLoader"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faXmark} from "@fortawesome/free-solid-svg-icons"
-// import ActivityModels from "../../assets/rosters/activityModels"
 import { getFirestore, collection, getDocs} from 'firebase/firestore'
 import app from "../../fb"
 import Select from 'react-select'
@@ -20,9 +19,6 @@ export default function RosterSettings ({setRosterSettings}) {
 
     //STATES
     const [allEmployees, setAllEmployees] = useState(null)
-    // const [activityModels, setActivityModels] = useState(null)
-    // const [rosterDate, setRosterDate] = useState(null)
-    // const [employeeMatch, setEmployeeMatch] = useState(null)
     const [activeSection, setActiveSection] = useState('employee')
     const [employeeList, setEmployeeList] = useState(allEmployees)
     const [selectedUser, setSelectedUser] = useState(null)

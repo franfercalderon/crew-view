@@ -32,7 +32,6 @@ export default function SwapContainer () {
     const [elegibleOffers, setElegibleOffers] = useState(null)
     const [elegibilityFilter, setElegibilityFilter] = useState(true)
     const [showManage, setShowManage] = useState(false)
-    // const [myRequests, setMyRequests] = useState([])
 
     //FUNCTIONS
     const handleSelect = (e) =>{

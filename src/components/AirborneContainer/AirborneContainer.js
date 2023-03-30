@@ -8,6 +8,9 @@ export default function AirborneContainer (){
     const [airborneFlights, setAirborneFlights] = useState(null)
     const [spotted, setSpotted] = useState(null)
     const [imgSrc, setImgSrc] = useState(null)
+    airborneFlights&&
+
+    console.log(airborneFlights)
 
     //MAP CONFIGURATION
     const defaultProps = {
