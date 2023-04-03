@@ -598,7 +598,7 @@ export default function Rosters () {
         )
     }
 
-    const actOne31 = (year,monthIndex) => {
+    const actOne30 = (year,monthIndex) => {
         return(
          [
             off(year,monthIndex, 1),
@@ -624,20 +624,19 @@ export default function Rosters () {
             off(year,monthIndex, 21),
             fcoeze(year,monthIndex,22),
             off(year,monthIndex, 23),
-            off(year,monthIndex, 24),
-            ezemad(year,monthIndex,25),
+            aepmdz(year,monthIndex, 24),
+            mdzaep(year,monthIndex,25),
             off(year,monthIndex, 26),
             off(year,monthIndex, 27),
-            madeze(year,monthIndex,28),
+            ezegig(year,monthIndex,28),
             off(year,monthIndex, 29),
-            aepmdz(year,monthIndex, 30),
-            mdzaep(year,monthIndex, 31)
+            gigeze(year,monthIndex, 30)
         ]
 
         )
     }
 
-    const actTwo31 = (year,monthIndex) => {
+    const actTwo30 = (year,monthIndex) => {
         return(
          [
             off(year,monthIndex, 1),
@@ -658,19 +657,18 @@ export default function Rosters () {
             recurrent(year,monthIndex,16),
             off(year,monthIndex, 17),
             off(year,monthIndex, 18),
-            ezefco(year,monthIndex,19),
-            off(year,monthIndex, 20),
+            ezegig(year,monthIndex, 19),
+            gigeze(year,monthIndex, 20),
             off(year,monthIndex, 21),
-            fcoeze(year,monthIndex,22),
+            ezefco(year,monthIndex,22),
             off(year,monthIndex, 23),
             off(year,monthIndex, 24),
-            ezemad(year,monthIndex,25),
+            fcoeze(year,monthIndex,25),
             off(year,monthIndex, 26),
             off(year,monthIndex, 27),
-            madeze(year,monthIndex,28),
+            aepmdz(year,monthIndex,28),
             off(year,monthIndex, 29),
-            ezegig(year,monthIndex, 30),
-            gigeze(year,monthIndex, 31)
+            mdzaep(year,monthIndex, 30)
         ]
 
         )
@@ -688,58 +686,7 @@ export default function Rosters () {
             }            
         )
     }
-    /////
-    
-// const a330200 = ()=>{
-//     return(
-//         {
-//             'manufacturer': 'airbus',
-//             'model': '330',
-//             'series': '200'
-//         }
-//     )
-// }
-// const a330300 = ()=>{
-//     return(
-//         {
-//             'manufacturer': 'airbus',
-//             'model': '330',
-//             'series': '300'
-//         }
-//     )
-// }
-// const b737 = ()=>{
-//     return(
-//         {
-//             'manufacturer': 'boeing',
-//             'model': '737',
-//             'series': '700'
-//         }
-//     )
-// }
-// const b738 = ()=>{
-//     return(
-//         {
-//             'manufacturer': 'boeing',
-//             'model': '737',
-//             'series': '800'
-//         }
-//     )
-// }
-// const b738m = ()=>{
-//     return(
-//         {
-//             'manufacturer': 'boeing',
-//             'model': '737',
-//             'series': '800 max'
-//         }
-//     )
-// }
 
-    
-
-        // {avion:'nuevo'},
-        // {avion: 'viejo'}
         const planes = {
             data:[
                 {
@@ -779,15 +726,12 @@ export default function Rosters () {
 
        addDoc(dbRef, planes)
 
-        // addDoc(dbRef,rosterModel('0001',2023,2,actOne31(2023,2)))
-        //     .then(res=>console.log(res.id))
-        //     .catch(err=>console.log(err))
     }
 
     const postRoster =() =>{
         const dbRef = collection(db, 'rosters')
 
-        addDoc(dbRef,rosterModel('0001',2023,2,actOne31(2023,2)))
+        addDoc(dbRef,rosterModel('0002',2023,3,actOne30(2023,3)))
             .then(res=>console.log(res.id))
             .catch(err=>console.log(err))
     }

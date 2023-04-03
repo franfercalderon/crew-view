@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faArrowsRotate, faCalendar, faPaperPlane  , faEnvelope} from "@fortawesome/free-solid-svg-icons"
-// import Rosters from "../../assets/rosters/rosters"
 
 export default function SideBar () {
     return(
@@ -49,9 +48,6 @@ export default function SideBar () {
                         </div>
                     </NavLink>
                 </ul>
-                {/* <ul>
-                    <Rosters/>
-                </ul> */}
             </nav>
         </div>
         </>

@@ -26,6 +26,19 @@ Once you have installed the dependencies, to start the project, simply run this 
 npm start
 ```
 
+## Login
+Use this credentials for login:
+user: employee1@airline.com
+password: employee1
+
+## GIFS 
+### `Flight swap request by user1`
+![Flight swap request](http://www.giphy.com/gifs/fMt4G0zVuKwAEA8ZB6)
+http://www.giphy.com/gifs/fMt4G0zVuKwAEA8ZB6
+
+### `Flight swap approval by user2`
+http://www.giphy.com/gifs/cWftlMqn3E7CYTs0jK
+
 ## Data Base 
 ### `Firebase`
 Firebase-Firestore was used for authentication and as a DB.
