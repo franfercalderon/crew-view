@@ -34,10 +34,9 @@ password: employee1
 ## GIFS 
 ### `Flight swap request by user1`
 ![Flight swap request](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODcwODUxMGYxZmRkNWVhZDkzYzg4YWQzODMxYjYyNmE1MTM5YzQ1OCZjdD1n/fMt4G0zVuKwAEA8ZB6/giphy.gif)
-http://www.giphy.com/gifs/fMt4G0zVuKwAEA8ZB6
 
 ### `Flight swap approval by user2`
-http://www.giphy.com/gifs/cWftlMqn3E7CYTs0jK
+![Flight swap request](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzI5Mjg0YzI0NDVhYjk3MWZjOTBmM2U5YzA3OWIwYmMyMTRhNjE3ZCZjdD1n/cWftlMqn3E7CYTs0jK/giphy.gif)
 
 ## Data Base 
 ### `Firebase`
