@@ -61,11 +61,12 @@ export default function Dashboard () {
     return(
         <>
         <div className="dashboard-main-container container col-10">
+        
             {isLoading ? 
-                <Loader/>
+
+                <Loader/>                
                 :
                 <>
-                {/* <NextFlight flight={nextFlight}/> */}
                 
                 {Object.keys(currentRoster).length === 0 ?
 

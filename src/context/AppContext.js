@@ -146,7 +146,8 @@ const AppProvider = ({children}) => {
 
 
     //This function gets user info from DB and stores is in a State
-    const updateContextUser = (email)=>{
+    const updateContextUser = (email) => {
+
 
             //Creates reference to doc, looking for a doc containing user's email 
             const docRef = doc(db, 'users', email)
@@ -175,7 +176,7 @@ const AppProvider = ({children}) => {
     
     
     useEffect(()=>{
-        
+
         //Calls FIrebase function when app mounts
         onAuthStateChanged(auth, (fbUser)=>{
             

@@ -674,6 +674,84 @@ export default function Rosters () {
         )
     }
 
+    const actOne31 = (year,monthIndex) => {
+        return(
+         [
+            off(year,monthIndex, 1),
+            ezejfk(year,monthIndex,2),
+            off(year,monthIndex,3),
+            off(year,monthIndex,4),
+            jfkeze(year,monthIndex,5),
+            off(year,monthIndex,6),
+            off(year,monthIndex,7),
+            aepbrc(year,monthIndex,8),
+            brcaep(year,monthIndex,9),
+            off(year,monthIndex, 10),
+            off(year,monthIndex, 11),
+            aeplim(year,monthIndex,12),
+            limaep(year,monthIndex,13),
+            recurrent(year,monthIndex,14),
+            recurrent(year,monthIndex,15),
+            recurrent(year,monthIndex,16),
+            off(year,monthIndex, 17),
+            off(year,monthIndex, 18),
+            ezefco(year,monthIndex,19),
+            off(year,monthIndex, 20),
+            off(year,monthIndex, 21),
+            fcoeze(year,monthIndex,22),
+            off(year,monthIndex, 23),
+            aepmdz(year,monthIndex, 24),
+            mdzaep(year,monthIndex,25),
+            off(year,monthIndex, 26),
+            off(year,monthIndex, 27),
+            ezegig(year,monthIndex,28),
+            off(year,monthIndex, 29),
+            gigeze(year,monthIndex, 30),
+            off(year,monthIndex, 31)
+        ]
+
+        )
+    }
+
+    const actTwo31 = (year,monthIndex) => {
+        return(
+         [
+            off(year,monthIndex, 1),
+            ezemad(year,monthIndex,2),
+            off(year,monthIndex,3),
+            off(year,monthIndex,4),
+            madeze(year,monthIndex,5),
+            off(year,monthIndex,6),
+            off(year,monthIndex,7),
+            ezemia(year,monthIndex,8),
+            off(year,monthIndex, 9),
+            miaeze(year,monthIndex,10),
+            off(year,monthIndex, 11),
+            off(year,monthIndex,12),
+            off(year,monthIndex,13),
+            recurrent(year,monthIndex,14),
+            recurrent(year,monthIndex,15),
+            recurrent(year,monthIndex,16),
+            off(year,monthIndex, 17),
+            off(year,monthIndex, 18),
+            ezegig(year,monthIndex, 19),
+            gigeze(year,monthIndex, 20),
+            off(year,monthIndex, 21),
+            ezefco(year,monthIndex,22),
+            off(year,monthIndex, 23),
+            off(year,monthIndex, 24),
+            fcoeze(year,monthIndex,25),
+            off(year,monthIndex, 26),
+            off(year,monthIndex, 27),
+            aepmdz(year,monthIndex,28),
+            off(year,monthIndex, 29),
+            mdzaep(year,monthIndex, 30),
+            off(year,monthIndex, 31)
+        ]
+
+        )
+    }
+
     const rosterModel = (crewId, year,monthIndex, activity) =>{
 
         return(
@@ -731,7 +809,67 @@ export default function Rosters () {
     const postRoster =() =>{
         const dbRef = collection(db, 'rosters')
 
-        addDoc(dbRef,rosterModel('0002',2023,3,actOne30(2023,3)))
+        addDoc(dbRef,rosterModel('0001',2023,4,actOne31(2023,4)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,4,actTwo31(2023,4)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0001',2023,5,actOne30(2023,5)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,5,actTwo30(2023,5)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0001',2023,6,actOne31(2023,6)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,6,actTwo31(2023,6)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0001',2023,7,actOne31(2023,7)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,7,actOne31(2023,7)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0001',2023,8,actTwo30(2023,8)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,8,actTwo30(2023,8)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0001',2023,9,actOne31(2023,9)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,9,actOne31(2023,9)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+            addDoc(dbRef,rosterModel('0001',2023,10,actTwo30(2023,10)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,10,actTwo30(2023,10)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0001',2023,11,actOne31(2023,11)))
+            .then(res=>console.log(res.id))
+            .catch(err=>console.log(err))
+
+        addDoc(dbRef,rosterModel('0002',2023,9,actOne31(2023,9)))
             .then(res=>console.log(res.id))
             .catch(err=>console.log(err))
     }
